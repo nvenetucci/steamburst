@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/nvenetucci/steamburst/issues"
   },
-  "homepage": "https://github.com/nvenetucci/steamburst#readme"
+  "homepage": "https://github.com/nvenetucci/steamburst#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
