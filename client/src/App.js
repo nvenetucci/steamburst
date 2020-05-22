@@ -30,8 +30,8 @@ class App extends Component {
       return (
         <div className="App">
           <ul>
-            {countries.map((country) => (
-              <li key={country.name}>{country.name}</li>
+            {countries.map((country, index) => (
+              <li key={index}>{country.name}</li>
             ))}
           </ul>
         </div>
