@@ -10,14 +10,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("https://restcountries.eu/rest/v2/all")
+    fetch("/countries")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        this.setState({
-          isLoaded: true,
-          countries: data,
-        });
+        this.setState({ isLoaded: true, countries: data });
       });
   }
 
