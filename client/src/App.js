@@ -23,12 +23,25 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <h2>{top100.shift().updated}</h2>
-          <ul>
-            {top100.map((stat, index) => (
-              <li key={index}>{stat.game}</li>
-            ))}
-          </ul>
+          <p>{top100.shift().updated}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Game</th>
+                <th>Current Players</th>
+                <th>Peak Today</th>
+              </tr>
+            </thead>
+            <tbody>
+              {top100.map((stat, index) => (
+                <tr key={index}>
+                  <td>{stat.game}</td>
+                  <td>{stat.current}</td>
+                  <td>{stat.peak}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       );
     }
