@@ -5,30 +5,28 @@ class App extends Component {
     super(props);
     this.state = {
       isLoaded: false,
-      countries: [],
+      top100: [],
     };
   }
 
   componentDidMount() {
-    fetch("/countries")
+    fetch("/top100")
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({ isLoaded: true, countries: data });
-      });
+      .then((json) => this.setState({ isLoaded: true, top100: json }));
   }
 
   render() {
-    var { isLoaded, countries } = this.state;
+    var { isLoaded, top100 } = this.state;
 
     if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
         <div className="App">
+          <h2>{top100.shift().updated}</h2>
           <ul>
-            {countries.map((country, index) => (
-              <li key={index}>{country.name}</li>
+            {top100.map((stat, index) => (
+              <li key={index}>{stat.game}</li>
             ))}
           </ul>
         </div>

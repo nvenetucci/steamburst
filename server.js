@@ -5,6 +5,10 @@ const app = express();
 const port = 5000;
 
 app.get("/", (req, res) => {
+  res.send("Steam Burst!");
+});
+
+app.get("/top100", (req, res) => {
   fetch("https://store.steampowered.com/stats/")
     .then((res) => res.text())
     .then((html) => {
