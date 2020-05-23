@@ -8,13 +8,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/countries", (req, res) => {
-  const countries = [
-    { name: "Australia", capital: "Canberra" },
-    { name: "United States of America", capital: "Washington, D.C." },
-    { name: "Poland", capital: "Warsaw" },
-  ];
-
-  res.json(countries);
+  fetch("https://restcountries.eu/rest/v2/all")
+    .then((res) => res.json())
+    .then((data) => res.json(data));
 });
 
 app.listen(port, () => {
