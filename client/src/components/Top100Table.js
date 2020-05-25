@@ -37,7 +37,7 @@ class Top100Table extends Component {
               {top100.map((row, index) => (
                 <tr key={index}>
                   <td>
-                    <Link to="/item">{row.game}</Link>
+                    <Link to="/item">{row.name}</Link>
                   </td>
                   <td>{row.current}</td>
                   <td>{row.peak}</td>
