@@ -34,13 +34,13 @@ class Top100Table extends Component {
               </tr>
             </thead>
             <tbody>
-              {top100.map((row, index) => (
+              {top100.map((app, index) => (
                 <tr key={index}>
                   <td>
-                    <Link to="/item">{row.name}</Link>
+                    <Link to={`/app/${app.appid}`}>{app.name}</Link>
                   </td>
-                  <td>{row.current}</td>
-                  <td>{row.peak}</td>
+                  <td>{app.current}</td>
+                  <td>{app.peak}</td>
                 </tr>
               ))}
             </tbody>

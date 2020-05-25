@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "./App.css";
 import Top100Table from "./components/Top100Table";
 
@@ -9,7 +14,8 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/item" component={Item} />
+          <Route path="/app" exact render={() => <Redirect to="/" />} />
+          <Route path="/app/:appid" component={AppInfo} />
         </Switch>
       </Router>
     );
@@ -27,13 +33,48 @@ class Home extends Component {
   }
 }
 
-class Item extends Component {
-  render() {
-    return (
-      <div className="Item">
-        <h1>This is the item page</h1>
-      </div>
+class AppInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      appid: "",
+      info: {},
+    };
+  }
+
+  async componentDidMount() {
+    let appid = this.props.match.params.appid;
+
+    let response = await fetch(
+      `https://cors-anywhere.herokuapp.com/https://store.steampowered.com/api/appdetails?appids=${appid}`
     );
+    let json = await response.json();
+
+    this.setState({
+      isLoaded: true,
+      appid,
+      info: json,
+    });
+  }
+
+  render() {
+    let { isLoaded, appid, info } = this.state;
+
+    if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <div className="AppInfo">
+          <ul>
+            <li>{appid}</li>
+            <li>{info[appid].data.name}</li>
+            <li>{info[appid].data.short_description}</li>
+          </ul>
+          <h1></h1>
+        </div>
+      );
+    }
   }
 }
 
