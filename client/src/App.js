@@ -43,19 +43,12 @@ class AppInfo extends Component {
     };
   }
 
-  async componentDidMount() {
-    let appid = this.props.match.params.appid;
+  componentDidMount() {
+    const appid = this.props.match.params.appid;
 
-    let response = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://store.steampowered.com/api/appdetails?appids=${appid}`
-    );
-    let json = await response.json();
-
-    this.setState({
-      isLoaded: true,
-      appid,
-      info: json,
-    });
+    fetch(`/app/${appid}`)
+      .then((res) => res.json())
+      .then((json) => this.setState({ isLoaded: true, appid, info: json }));
   }
 
   render() {

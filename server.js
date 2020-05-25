@@ -38,8 +38,10 @@ app.get("/top100", (req, res) => {
     });
 });
 
-app.get("/countries", (req, res) => {
-  fetch("https://restcountries.eu/rest/v2/all")
+app.get("/app/:appid", (req, res) => {
+  fetch(
+    `https://store.steampowered.com/api/appdetails?appids=${req.params.appid}`
+  )
     .then((res) => res.json())
     .then((data) => res.json(data));
 });
