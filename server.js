@@ -21,12 +21,14 @@ app.get("/top100", (req, res) => {
       $(".player_count_row").each((i, elem) => {
         const current = $(elem).find(".currentServers").first().text();
         const peak = $(elem).find(".currentServers").last().text();
-        const game = $(elem).find(".gameLink").text();
+        const appid = $(elem).find(".gameLink").attr("href").split("/")[4];
+        const name = $(elem).find(".gameLink").text();
 
         const obj = {
           current,
           peak,
-          game,
+          appid,
+          name,
         };
 
         data.push(obj);
