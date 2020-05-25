@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Top100Table extends Component {
   constructor(props) {
@@ -35,7 +36,9 @@ class Top100Table extends Component {
             <tbody>
               {top100.map((row, index) => (
                 <tr key={index}>
-                  <td>{row.game}</td>
+                  <td>
+                    <Link to="/item">{row.game}</Link>
+                  </td>
                   <td>{row.current}</td>
                   <td>{row.peak}</td>
                 </tr>
