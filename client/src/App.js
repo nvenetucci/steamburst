@@ -37,32 +37,40 @@ class AppInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: false,
       appid: "",
+      infoIsLoaded: false,
       info: {},
+      playersIsLoaded: false,
+      players: {},
     };
   }
 
   componentDidMount() {
     const appid = this.props.match.params.appid;
+    this.setState({ appid });
 
     fetch(`/app/${appid}`)
       .then((res) => res.json())
-      .then((json) => this.setState({ isLoaded: true, appid, info: json }));
+      .then((data) => this.setState({ infoIsLoaded: true, info: data }));
+
+    fetch(`/app/${appid}/players`)
+      .then((res) => res.json())
+      .then((data) => this.setState({ playersIsLoaded: true, players: data }));
   }
 
   render() {
-    let { isLoaded, appid, info } = this.state;
+    let { appid, infoIsLoaded, info, playersIsLoaded, players } = this.state;
 
-    if (!isLoaded) {
+    if (!infoIsLoaded || !playersIsLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
         <div className="AppInfo">
           <ul>
-            <li>{appid}</li>
-            <li>{info[appid].data.name}</li>
-            <li>{info[appid].data.short_description}</li>
+            <li>{`App ID: ${appid}`}</li>
+            <li>{`Name: ${info[appid].data.name}`}</li>
+            <li>{`Description: ${info[appid].data.short_description}`}</li>
+            <li>{`Current Players: ${players.response.player_count}`}</li>
           </ul>
           <h1></h1>
         </div>
