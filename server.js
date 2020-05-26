@@ -40,7 +40,15 @@ app.get("/top100", (req, res) => {
 
 app.get("/app/:appid", (req, res) => {
   fetch(
-    `https://store.steampowered.com/api/appdetails?appids=${req.params.appid}`
+    `https://store.steampowered.com/api/appdetails/?appids=${req.params.appid}`
+  )
+    .then((res) => res.json())
+    .then((data) => res.json(data));
+});
+
+app.get("/app/:appid/players", (req, res) => {
+  fetch(
+    `https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${req.params.appid}`
   )
     .then((res) => res.json())
     .then((data) => res.json(data));
