@@ -55,6 +55,18 @@ app.get("/app/:appid/players", (req, res) => {
     .then((data) => res.json(data));
 });
 
+app.get("/validate", (req, res) => {
+  const options = {
+    headers: {
+      Authorization: `OAuth ${process.env.TWITCH_TOKEN}`,
+    },
+  };
+
+  fetch("https://id.twitch.tv/oauth2/validate", options)
+    .then((res) => res.json())
+    .then((data) => res.json(data));
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
