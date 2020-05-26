@@ -55,7 +55,7 @@ app.get("/app/:appid/players", (req, res) => {
     .then((data) => res.json(data));
 });
 
-app.get("/validate", (req, res) => {
+app.get("/twitch/validate", (req, res) => {
   const options = {
     headers: {
       Authorization: `OAuth ${process.env.TWITCH_TOKEN}`,
@@ -65,6 +65,59 @@ app.get("/validate", (req, res) => {
   fetch("https://id.twitch.tv/oauth2/validate", options)
     .then((res) => res.json())
     .then((data) => res.json(data));
+});
+
+app.get("/twitch/:game", (req, res) => {
+  const options = {
+    headers: {
+      "Client-ID": process.env.TWITCH_CLIENT_ID,
+      Authorization: `Bearer ${process.env.TWITCH_TOKEN}`,
+    },
+  };
+
+  fetch(`https://api.twitch.tv/helix/games?name=${req.params.game}`, options)
+    .then((res) => res.json())
+    .then((data) => res.json(data));
+});
+
+app.get("/twitch/:gameid/streams", (req, res) => {
+  const init = `https://api.twitch.tv/helix/streams?first=100&game_id=${req.params.gameid}`;
+
+  const streams = [];
+
+  let getStreams = (url) => {
+    const options = {
+      headers: {
+        "Client-ID": process.env.TWITCH_CLIENT_ID,
+        Authorization: `Bearer ${process.env.TWITCH_TOKEN}`,
+      },
+    };
+
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((json) => {
+        // console.log(json);
+        json.data.forEach((stream) => {
+          streams.push({
+            id: stream.id,
+            user_name: stream.user_name,
+            viewer_count: stream.viewer_count,
+          });
+        });
+
+        if (Object.keys(json.pagination).length !== 0) {
+          // console.log(`going to the next page: ${json.pagination.cursor}`);
+          getStreams(`${init}&after=${json.pagination.cursor}`);
+        } else {
+          res.json(streams);
+        }
+      })
+      .catch((err) => {
+        console.log("Request failed", err);
+      });
+  };
+
+  getStreams(init);
 });
 
 app.listen(port, () => {

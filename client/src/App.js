@@ -72,7 +72,6 @@ class AppInfo extends Component {
             <li>{`Description: ${info[appid].data.short_description}`}</li>
             <li>{`Current Players: ${players.response.player_count}`}</li>
           </ul>
-          <h1></h1>
         </div>
       );
     }
