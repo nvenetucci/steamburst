@@ -120,6 +120,45 @@ app.get("/twitch/:gameid/streams", (req, res) => {
   getStreams(init);
 });
 
+app.get("/deals/", (req, res) => {
+  api_key=process.env.IS_THERE_ANY_DEAL_KEY
+  fetch(
+    `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=100&shops=steam&sort=price%3Aasc`
+  )
+    .then((res) => res.json())
+    .then((data) => res.json(data))
+    .catch((error) => console.error('Error', error))
+})
+
+app.get("/deals/:appid/", (req, res) => {
+  api_key=process.env.IS_THERE_ANY_DEAL_KEY
+  if(isNaN(req.params.appid)){
+    fetch(
+      `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=f036ed29e8f121e4e2947f926fb06dd414ee3dfe%09&plains=${req.params.appid}`
+    )
+    .then((res) => res.json())
+    .then((data) => res.json(data))
+    .catch((error) => console.error('Error', error))
+  } else {
+    // get the title of the game in "plains" format
+    fetch(
+      `https://private-anon-f775a85414-itad.apiary-proxy.com/v02/game/plain/?key=${api_key}&shop=steam&game_id=app%2F${req.params.appid}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // use the plains title to request deals from all available sites
+        plain = data.data.plain
+        fetch(
+          `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=f036ed29e8f121e4e2947f926fb06dd414ee3dfe%09&plains=${plain}`
+        )
+        .then((res) => res.json())
+        .then((data) => res.json(data))
+        .catch((error) => console.error('Error', error))
+      })
+    }
+  })
+
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

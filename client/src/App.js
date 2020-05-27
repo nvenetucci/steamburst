@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Top100Table from "./components/Top100Table";
+import TopDeals from "./components/TopDeals";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/app" exact render={() => <Redirect to="/" />} />
           <Route path="/app/:appid" component={AppInfo} />
+          <Route path="/deals" component={TopDeals} />
         </Switch>
       </Router>
     );
