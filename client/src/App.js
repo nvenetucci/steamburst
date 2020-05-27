@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Top100Table from "./components/Top100Table";
+import CurrentPlayers from "./components/CurrentPlayers";
+import SteamDetails from "./components/SteamDetails";
 
 class App extends Component {
   render() {
@@ -34,47 +36,13 @@ class Home extends Component {
 }
 
 class AppInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      appid: "",
-      infoIsLoaded: false,
-      info: {},
-      playersIsLoaded: false,
-      players: {},
-    };
-  }
-
-  componentDidMount() {
-    const appid = this.props.match.params.appid;
-    this.setState({ appid });
-
-    fetch(`/app/${appid}`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ infoIsLoaded: true, info: data }));
-
-    fetch(`/app/${appid}/players`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ playersIsLoaded: true, players: data }));
-  }
-
   render() {
-    let { appid, infoIsLoaded, info, playersIsLoaded, players } = this.state;
-
-    if (!infoIsLoaded || !playersIsLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <div className="AppInfo">
-          <ul>
-            <li>{`App ID: ${appid}`}</li>
-            <li>{`Name: ${info[appid].data.name}`}</li>
-            <li>{`Description: ${info[appid].data.short_description}`}</li>
-            <li>{`Current Players: ${players.response.player_count}`}</li>
-          </ul>
-        </div>
-      );
-    }
+    return (
+      <div className="AppInfo">
+        <SteamDetails appid={this.props.match.params.appid} />
+        <CurrentPlayers appid={this.props.match.params.appid} />
+      </div>
+    );
   }
 }
 
