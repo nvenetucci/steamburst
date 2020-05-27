@@ -11,16 +11,34 @@ import CurrentPlayers from "./components/CurrentPlayers";
 import SteamDetails from "./components/SteamDetails";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      apps: {},
+    };
+  }
+
+  componentDidMount() {
+    fetch("/applist")
+      .then((res) => res.json())
+      .then((data) => this.setState({ isLoaded: true, apps: data }));
+  }
+
   render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/app" exact render={() => <Redirect to="/" />} />
-          <Route path="/app/:appid" component={AppInfo} />
-        </Switch>
-      </Router>
-    );
+    if (!this.state.isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/app" exact render={() => <Redirect to="/" />} />
+            <Route path="/app/:appid" component={AppInfo} />
+          </Switch>
+        </Router>
+      );
+    }
   }
 }
 

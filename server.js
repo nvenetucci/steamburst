@@ -9,6 +9,12 @@ app.get("/", (req, res) => {
   res.send("Steam Burst!");
 });
 
+app.get("/applist", (req, res) => {
+  fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
+    .then((res) => res.json())
+    .then((data) => res.json(data));
+});
+
 app.get("/top100", (req, res) => {
   fetch("https://store.steampowered.com/stats/")
     .then((res) => res.text())
