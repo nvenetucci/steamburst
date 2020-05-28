@@ -10,7 +10,7 @@ class SteamDetails extends Component {
   }
 
   componentDidMount() {
-    fetch(`/app/${this.props.appid}`)
+    fetch(`/steam/app/${this.props.appid}`)
       .then((res) => res.json())
       .then((json) => this.setState({ isLoaded: true, details: json }));
   }

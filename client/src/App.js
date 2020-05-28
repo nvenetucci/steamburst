@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("/applist")
+    fetch("/steam/applist")
       .then((res) => res.json())
       .then((data) => this.setState({ isLoaded: true, apps: data }));
   }
@@ -33,8 +33,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/app" exact render={() => <Redirect to="/" />} />
-            <Route path="/app/:appid" component={AppInfo} />
+            <Route path="/app/:appid" exact component={AppInfo} />
+            <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Router>
       );
