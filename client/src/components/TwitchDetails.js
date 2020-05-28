@@ -10,7 +10,7 @@ class TwitchDetails extends Component {
   }
 
   componentDidMount() {
-    fetch(`/twitch/${this.props.appname}`)
+    fetch(`/twitch/${this.props.appname.replace(/[\u{0080}-\u{FFFF}]/gu, "")}`)
       .then((res) => res.json())
       .then((json) => fetch(`/twitch/${json.data[0].id}/streams`))
       .then((res) => res.json())
