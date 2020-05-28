@@ -9,6 +9,7 @@ import "./App.css";
 import Top100Table from "./components/Top100Table";
 import CurrentPlayers from "./components/CurrentPlayers";
 import SteamDetails from "./components/SteamDetails";
+import TwitchDetails from "./components/TwitchDetails";
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,14 @@ class App extends Component {
       .then((data) => this.setState({ isLoaded: true, apps: data }));
   }
 
+  getNamebyId = (appid) => {
+    const obj = this.state.apps.applist.apps.find(
+      (app) => `${app.appid}` === appid
+    );
+
+    return obj.name;
+  };
+
   render() {
     if (!this.state.isLoaded) {
       return <div>Loading...</div>;
@@ -33,7 +42,13 @@ class App extends Component {
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/app/:appid" exact component={AppInfo} />
+            <Route
+              path="/app/:appid"
+              exact
+              render={(props) => (
+                <AppInfo {...props} getNamebyId={this.getNamebyId} />
+              )}
+            />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Router>
@@ -59,6 +74,9 @@ class AppInfo extends Component {
       <div className="AppInfo">
         <SteamDetails appid={this.props.match.params.appid} />
         <CurrentPlayers appid={this.props.match.params.appid} />
+        <TwitchDetails
+          appname={this.props.getNamebyId(this.props.match.params.appid)}
+        />
       </div>
     );
   }
