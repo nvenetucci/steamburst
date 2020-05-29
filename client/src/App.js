@@ -10,19 +10,54 @@ import Top100Table from "./components/Top100Table";
 import TopDeals from "./components/TopDeals";
 import CurrentPlayers from "./components/CurrentPlayers";
 import SteamDetails from "./components/SteamDetails";
+import TwitchDetails from "./components/TwitchDetails";
 
 class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/app" exact render={() => <Redirect to="/" />} />
-          <Route path="/app/:appid" component={AppInfo} />
-          <Route path="/deals" component={TopDeals} />
-        </Switch>
-      </Router>
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      apps: {},
+    };
+  }
+
+  componentDidMount() {
+    fetch("/steam/applist")
+      .then((res) => res.json())
+      .then((data) => this.setState({ isLoaded: true, apps: data }));
+  }
+
+  getNamebyId = (appid) => {
+    const obj = this.state.apps.applist.apps.find(
+      (app) => `${app.appid}` === appid
     );
+
+    return obj.name;
+  };
+
+
+
+  render() {
+    if (!this.state.isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route
+              path="/app/:appid"
+              exact
+              render={(props) => (
+                <AppInfo {...props} getNamebyId={this.getNamebyId} />
+              )}
+            />
+            <Route path="/deals" component={TopDeals} />
+            <Route render={() => <Redirect to="/" />} />
+          </Switch>
+        </Router>
+      );
+    }
   }
 }
 
@@ -43,6 +78,9 @@ class AppInfo extends Component {
       <div className="AppInfo">
         <SteamDetails appid={this.props.match.params.appid} />
         <CurrentPlayers appid={this.props.match.params.appid} />
+        <TwitchDetails
+          appname={this.props.getNamebyId(this.props.match.params.appid)}
+        />
       </div>
     );
   }

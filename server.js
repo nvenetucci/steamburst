@@ -5,11 +5,13 @@ require("dotenv").config();
 const app = express();
 const port = 5000;
 
-app.get("/", (req, res) => {
-  res.send("Steam Burst!");
+app.get("/steam/applist", (req, res) => {
+  fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
+    .then((res) => res.json())
+    .then((data) => res.json(data));
 });
 
-app.get("/top100", (req, res) => {
+app.get("/steam/top100", (req, res) => {
   fetch("https://store.steampowered.com/stats/")
     .then((res) => res.text())
     .then((html) => {
@@ -39,7 +41,7 @@ app.get("/top100", (req, res) => {
     });
 });
 
-app.get("/app/:appid", (req, res) => {
+app.get("/steam/app/:appid", (req, res) => {
   fetch(
     `https://store.steampowered.com/api/appdetails/?appids=${req.params.appid}`
   )
@@ -47,7 +49,7 @@ app.get("/app/:appid", (req, res) => {
     .then((data) => res.json(data));
 });
 
-app.get("/app/:appid/players", (req, res) => {
+app.get("/steam/app/:appid/players", (req, res) => {
   fetch(
     `https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${req.params.appid}`
   )

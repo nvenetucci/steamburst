@@ -11,7 +11,7 @@ class Top100Table extends Component {
   }
 
   componentDidMount() {
-    fetch("/top100")
+    fetch("/steam/top100")
       .then((res) => res.json())
       .then((json) => this.setState({ isLoaded: true, top100: json }));
   }
