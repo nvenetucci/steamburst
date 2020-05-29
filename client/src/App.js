@@ -11,6 +11,7 @@ import TopDeals from "./components/TopDeals";
 import CurrentPlayers from "./components/CurrentPlayers";
 import SteamDetails from "./components/SteamDetails";
 import TwitchDetails from "./components/TwitchDetails";
+import DealDetails from "./components/DealDetails";
 
 class App extends Component {
   constructor(props) {
@@ -52,7 +53,6 @@ class App extends Component {
                 <AppInfo {...props} getNamebyId={this.getNamebyId} />
               )}
             />
-            <Route path="/deals" component={TopDeals} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Router>
@@ -67,6 +67,7 @@ class Home extends Component {
       <div className="Home">
         <h1>This is the home page</h1>
         <Top100Table />
+        <TopDeals />
       </div>
     );
   }
@@ -81,6 +82,7 @@ class AppInfo extends Component {
         <TwitchDetails
           appname={this.props.getNamebyId(this.props.match.params.appid)}
         />
+        <DealDetails appid={this.props.match.params.appid} />
       </div>
     );
   }

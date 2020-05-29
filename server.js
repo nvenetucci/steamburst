@@ -136,7 +136,7 @@ app.get("/deals/:appid/", (req, res) => {
   api_key=process.env.IS_THERE_ANY_DEAL_KEY
   if(isNaN(req.params.appid)){
     fetch(
-      `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=f036ed29e8f121e4e2947f926fb06dd414ee3dfe%09&plains=${req.params.appid}`
+      `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=${api_key}%09&plains=${req.params.appid}`
     )
     .then((res) => res.json())
     .then((data) => res.json(data))
@@ -151,7 +151,7 @@ app.get("/deals/:appid/", (req, res) => {
         // use the plains title to request deals from all available sites
         plain = data.data.plain
         fetch(
-          `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=f036ed29e8f121e4e2947f926fb06dd414ee3dfe%09&plains=${plain}`
+          `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=${api_key}%09&plains=${plain}`
         )
         .then((res) => res.json())
         .then((data) => res.json(data))
@@ -159,6 +159,8 @@ app.get("/deals/:appid/", (req, res) => {
       })
     }
   })
+
+
 
 
 app.listen(port, () => {

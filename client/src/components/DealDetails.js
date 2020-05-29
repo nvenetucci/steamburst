@@ -1,54 +1,54 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
-class TopDeals extends Component {
+class DealDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoaded: false,
-            deal_data: [],
+            deal_data: {},
+            game_name: "",
         };
     }
 
     componentDidMount() {
-        fetch("/deals")
-        .then((res) => res.json())
-        .then((data) => this.setState({isLoaded: true, deal_data: data}));
+
+        fetch(`/deals/${this.props.appid}`)
+          .then((res) => res.json())
+          .then((data) => this.setState({ 
+              isLoaded: true, 
+              deal_data: data, 
+              game_name: Object.keys(data.data)[0]
+            }));
     }
 
     render() {
-        var { isLoaded, deal_data } = this.state;
-
+        var {isLoaded, deal_data, game_name} = this.state
+        
         if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
 
             return (
-            <div className="TopDeals">
-                <h1>Top Deals</h1>
+            <div className="DealDetails">
                 <table>
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th>Store</th>
                             <th>Current Price</th>
                             <th>Previous Price</th>
                             <th>Savings</th>
-                            <th>Shop</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        {deal_data.data.list.map((app, index) => (
+                        {deal_data.data[game_name].list.map((app, index) => (
                             <tr key={index}>
                                 <td>
-                                    <Link to={`/app/${242760}`}>{app.title}</Link>
+                                    <a href={app.url}>{app.shop.name}</a>
                                 </td>
                                 <td>{app.price_new}</td>
                                 <td>{app.price_old}</td>
                                 <td>{app.price_cut}% OFF</td>
-                                <td>
-                                    <a href={app.urls.buy}>{app.shop.name}</a>
-                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -59,4 +59,4 @@ class TopDeals extends Component {
     }
 }
 
-export default TopDeals;
+export default DealDetails;
