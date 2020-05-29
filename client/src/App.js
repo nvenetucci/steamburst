@@ -10,6 +10,7 @@ import Top100Table from "./components/Top100Table";
 import CurrentPlayers from "./components/CurrentPlayers";
 import SteamDetails from "./components/SteamDetails";
 import TwitchDetails from "./components/TwitchDetails";
+import SearchBar from "./components/SearchBar";
 
 class App extends Component {
   constructor(props) {
@@ -23,15 +24,24 @@ class App extends Component {
   componentDidMount() {
     fetch("/steam/applist")
       .then((res) => res.json())
-      .then((data) => this.setState({ isLoaded: true, apps: data }));
+      .then((data) => this.setState({ isLoaded: true, apps: data }))
+      .catch((err) => console.log("Request failed", err));
   }
 
-  getNamebyId = (appid) => {
+  getNameById = (appid) => {
     const obj = this.state.apps.applist.apps.find(
       (app) => `${app.appid}` === appid
     );
 
     return obj.name;
+  };
+
+  getIdByName = (appname) => {
+    const obj = this.state.apps.applist.apps.find(
+      (app) => `${app.name}` === appname
+    );
+
+    return obj.appid;
   };
 
   render() {
@@ -41,12 +51,19 @@ class App extends Component {
       return (
         <Router>
           <Switch>
-            <Route path="/" exact component={Home} />
+            {/* <Route path="/" exact component={Home} /> */}
+            <Route
+              path="/"
+              exact
+              render={(props) => (
+                <Home {...props} getIdByName={this.getIdByName} />
+              )}
+            />
             <Route
               path="/app/:appid"
               exact
               render={(props) => (
-                <AppInfo {...props} getNamebyId={this.getNamebyId} />
+                <AppInfo {...props} getNameById={this.getNameById} />
               )}
             />
             <Route render={() => <Redirect to="/" />} />
@@ -61,6 +78,7 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
+        <SearchBar getIdByName={this.props.getIdByName} />
         <h1>This is the home page</h1>
         <Top100Table />
       </div>
@@ -75,7 +93,7 @@ class AppInfo extends Component {
         <SteamDetails appid={this.props.match.params.appid} />
         <CurrentPlayers appid={this.props.match.params.appid} />
         <TwitchDetails
-          appname={this.props.getNamebyId(this.props.match.params.appid)}
+          appname={this.props.getNameById(this.props.match.params.appid)}
         />
       </div>
     );
