@@ -138,7 +138,7 @@ class SearchResults extends Component {
       // findAllMatches: false,
       // minMatchCharLength: 1,
       // location: 0,
-      threshold: 0.1,
+      threshold: 0.167,
       // distance: 100,
       // useExtendedSearch: false,
       keys: ["name"],
@@ -152,8 +152,6 @@ class SearchResults extends Component {
   };
 
   render() {
-    console.log("hello");
-
     if (!this.state.isLoaded) {
       return (
         <div>
@@ -163,7 +161,7 @@ class SearchResults extends Component {
     } else {
       return (
         <div className="SearchResults">
-          <SearchBar />
+          <SearchBar prevTerm={this.props.match.params.term} />
           <h1>This is the search results page</h1>
           <p>Showing results for "{this.props.match.params.term}"</p>
           <ul>

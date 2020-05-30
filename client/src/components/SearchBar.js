@@ -13,7 +13,13 @@ class SearchBar extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.term !== "") {
+    if (this.props.prevTerm && this.state.term !== "") {
+      if (this.props.prevTerm === this.state.term) {
+        this.setState({ term: "" });
+      } else {
+        this.setState({ isProvided: true });
+      }
+    } else if (this.state.term !== "") {
       this.setState({ isProvided: true });
     }
   };
