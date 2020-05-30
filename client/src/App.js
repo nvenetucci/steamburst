@@ -66,6 +66,13 @@ class App extends Component {
                 <AppInfo {...props} getNameById={this.getNameById} />
               )}
             />
+            <Route
+              path="/search/:term"
+              exact
+              render={(props) => (
+                <SearchResults key={props.match.params.term} {...props} />
+              )}
+            />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
         </Router>
@@ -95,6 +102,18 @@ class AppInfo extends Component {
         <TwitchDetails
           appname={this.props.getNameById(this.props.match.params.appid)}
         />
+      </div>
+    );
+  }
+}
+
+class SearchResults extends Component {
+  render() {
+    return (
+      <div className="SearchResults">
+        <SearchBar />
+        <h1>This is the Search Results page</h1>
+        <p>Showing results for "{this.props.match.params.term}"</p>
       </div>
     );
   }

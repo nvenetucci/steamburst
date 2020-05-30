@@ -5,17 +5,17 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      appid: "",
+      isProvided: false,
+      term: "",
     };
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const appid = this.props.getIdByName(this.state.title);
-
-    this.setState({ appid: appid });
+    if (this.state.term !== "") {
+      this.setState({ isProvided: true });
+    }
   };
 
   handleChange = (event) => {
@@ -23,8 +23,8 @@ class SearchBar extends Component {
   };
 
   render() {
-    if (this.state.appid !== "") {
-      return <Redirect push to={`/app/${this.state.appid}`} />;
+    if (this.state.isProvided) {
+      return <Redirect push to={`/search/${this.state.term}`} />;
     }
     return (
       <div className="SearchBar">
@@ -33,8 +33,8 @@ class SearchBar extends Component {
             type="search"
             className="SearchInput"
             placeholder="search..."
-            name="title"
-            value={this.state.title}
+            name="term"
+            value={this.state.term}
             onChange={this.handleChange}
           />
           <button className="btn" type="submit">
