@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import Fuse from "fuse.js";
 import "./App.css";
 import Top100Table from "./components/Top100Table";
 import CurrentPlayers from "./components/CurrentPlayers";
@@ -17,29 +18,27 @@ class App extends Component {
     super(props);
     this.state = {
       isLoaded: false,
-      apps: {},
+      apps: [],
     };
   }
 
   componentDidMount() {
     fetch("/steam/applist")
       .then((res) => res.json())
-      .then((data) => this.setState({ isLoaded: true, apps: data }))
+      .then((data) =>
+        this.setState({ isLoaded: true, apps: data.applist.apps })
+      )
       .catch((err) => console.log("Request failed", err));
   }
 
   getNameById = (appid) => {
-    const obj = this.state.apps.applist.apps.find(
-      (app) => `${app.appid}` === appid
-    );
+    const obj = this.state.apps.find((app) => `${app.appid}` === appid);
 
     return obj.name;
   };
 
   getIdByName = (appname) => {
-    const obj = this.state.apps.applist.apps.find(
-      (app) => `${app.name}` === appname
-    );
+    const obj = this.state.apps.find((app) => `${app.name}` === appname);
 
     return obj.appid;
   };
@@ -70,7 +69,11 @@ class App extends Component {
               path="/search/:term"
               exact
               render={(props) => (
-                <SearchResults key={props.match.params.term} {...props} />
+                <SearchResults
+                  {...props}
+                  key={props.match.params.term}
+                  apps={this.state.apps}
+                />
               )}
             />
             <Route render={() => <Redirect to="/" />} />
@@ -108,14 +111,69 @@ class AppInfo extends Component {
 }
 
 class SearchResults extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      results: [],
+    };
+  }
+
+  async componentDidMount() {
+    // this.search(this.props.match.params.term).then((data) => {
+    //   console.log(data);
+    //   this.setState({ isLoaded: true, results: data });
+    // });
+    const data = await this.search(this.props.match.params.term);
+
+    this.setState({ isLoaded: true, results: data });
+  }
+
+  search = async (term) => {
+    const options = {
+      // isCaseSensitive: false,
+      // includeScore: false,
+      // shouldSort: true,
+      // includeMatches: false,
+      // findAllMatches: false,
+      // minMatchCharLength: 1,
+      // location: 0,
+      threshold: 0.1,
+      // distance: 100,
+      // useExtendedSearch: false,
+      keys: ["name"],
+    };
+
+    const fuse = new Fuse(this.props.apps, options);
+
+    const pattern = term;
+
+    return fuse.search(pattern);
+  };
+
   render() {
-    return (
-      <div className="SearchResults">
-        <SearchBar />
-        <h1>This is the Search Results page</h1>
-        <p>Showing results for "{this.props.match.params.term}"</p>
-      </div>
-    );
+    console.log("hello");
+
+    if (!this.state.isLoaded) {
+      return (
+        <div>
+          <p>Loading...</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="SearchResults">
+          <SearchBar />
+          <h1>This is the search results page</h1>
+          <p>Showing results for "{this.props.match.params.term}"</p>
+          <ul>
+            {this.state.results.map((app, index) => (
+              <li key={index}>{app.item.name}</li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
   }
 }
 
