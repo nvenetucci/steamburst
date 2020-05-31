@@ -2,20 +2,64 @@ const express = require("express");
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const Fuse = require("fuse.js");
+const fs = require("fs");
 require("dotenv").config();
 const app = express();
 const port = 5000;
 
+const data = fs.readFileSync("applist.json");
+const appList = JSON.parse(data);
+
+// console.log("storage:", appList);
+
+app.get("/steam/applist/update", (req, res) => {
+  fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.applist.apps.length === 0) {
+        console.log("applist storage update unsuccessful, try again");
+        res.send("applist storage update unsuccessful, try again");
+      } else {
+        fs.writeFile("applist.json", JSON.stringify(data), finished);
+        res.send("applist storage update successful");
+      }
+
+      function finished(err) {
+        console.log("applist storage update successful");
+      }
+    })
+    .catch((err) => console.log("Request failed", err));
+});
+
 app.get("/steam/applist", (req, res) => {
   fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
     .then((res) => res.json())
-    .then((data) => res.json(data));
+    .then((data) => {
+      if (data.applist.apps.length === 0) {
+        console.log("sending applist from storage");
+        res.json(appList);
+      } else {
+        console.log("sending applist from api");
+        res.json(data);
+      }
+    })
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/steam/search/:term", (req, res) => {
   fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
     .then((res) => res.json())
     .then((data) => {
+      let apps = {};
+
+      if (data.applist.apps.length === 0) {
+        console.log("searching with storage data");
+        apps = appList;
+      } else {
+        console.log("searching with api data");
+        apps = data;
+      }
+
       const options = {
         // isCaseSensitive: false,
         // includeScore: false,
@@ -30,7 +74,7 @@ app.get("/steam/search/:term", (req, res) => {
         keys: ["name"],
       };
 
-      const fuse = new Fuse(data.applist.apps, options);
+      const fuse = new Fuse(apps.applist.apps, options);
 
       res.json(fuse.search(req.params.term));
     })
