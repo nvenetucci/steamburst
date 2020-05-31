@@ -17,9 +17,7 @@ app.get("/steam/top100", (req, res) => {
     .then((html) => {
       const $ = cheerio.load(html);
 
-      const data = [];
-
-      data.push({ updated: $(".statsTopSmall").text() });
+      const data = { updated: $(".statsTopSmall").text(), apps: [] };
 
       $(".player_count_row").each((i, elem) => {
         const current = $(elem).find(".currentServers").first().text();
@@ -34,7 +32,7 @@ app.get("/steam/top100", (req, res) => {
           name,
         };
 
-        data.push(obj);
+        data.apps.push(obj);
       });
 
       res.json(data);

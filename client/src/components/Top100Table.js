@@ -6,25 +6,25 @@ class Top100Table extends Component {
     super(props);
     this.state = {
       isLoaded: false,
-      top100: [],
+      top100: {},
     };
   }
 
   componentDidMount() {
     fetch("/steam/top100")
       .then((res) => res.json())
-      .then((json) => this.setState({ isLoaded: true, top100: json }));
+      .then((data) => this.setState({ isLoaded: true, top100: data }));
   }
 
   render() {
-    var { isLoaded, top100 } = this.state;
+    const { isLoaded, top100 } = this.state;
 
     if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
         <div className="Top100Table">
-          <p>{top100.shift().updated}</p>
+          <p>{top100.updated}</p>
           <table>
             <thead>
               <tr>
@@ -34,7 +34,7 @@ class Top100Table extends Component {
               </tr>
             </thead>
             <tbody>
-              {top100.map((app, index) => (
+              {top100.apps.map((app, index) => (
                 <tr key={index}>
                   <td>
                     <Link to={`/app/${app.appid}`}>{app.name}</Link>
