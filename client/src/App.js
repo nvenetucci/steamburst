@@ -8,9 +8,11 @@ import {
 import Fuse from "fuse.js";
 import "./App.css";
 import Top100Table from "./components/Top100Table";
+import TopDeals from "./components/TopDeals";
 import CurrentPlayers from "./components/CurrentPlayers";
 import SteamDetails from "./components/SteamDetails";
 import TwitchDetails from "./components/TwitchDetails";
+import DealDetails from "./components/DealDetails";
 import SearchBar from "./components/SearchBar";
 
 class App extends Component {
@@ -48,6 +50,7 @@ class App extends Component {
       return <div>Loading...</div>;
     } else {
       return (
+        
         <Router>
           <Switch>
             {/* <Route path="/" exact component={Home} /> */}
@@ -91,6 +94,7 @@ class Home extends Component {
         <SearchBar getIdByName={this.props.getIdByName} />
         <h1>This is the home page</h1>
         <Top100Table />
+        <TopDeals getIdByName={this.props.getIdByName} />
       </div>
     );
   }
@@ -105,6 +109,7 @@ class AppInfo extends Component {
         <TwitchDetails
           appname={this.props.getNameById(this.props.match.params.appid)}
         />
+        <DealDetails appid={this.props.match.params.appid} />
       </div>
     );
   }
