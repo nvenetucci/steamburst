@@ -120,14 +120,37 @@ app.get("/twitch/:gameid/streams", (req, res) => {
   getStreams(init);
 });
 
-app.get("/deals/", (req, res) => {
+
+app.get("/deals/", async (req, res) => {
   api_key=process.env.IS_THERE_ANY_DEAL_KEY
-  fetch(
-    `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=100&sort=price%3Aasc`
-  )
-    .then((res) => res.json())
-    .then((data) => res.json(data))
-    .catch((error) => console.error('Error', error))
+  best_games = [];
+  min_price = 10;
+  max_price = 61;
+  games_list_full = false;
+  offset = 0
+  limit = 3000
+  max_games = 100
+
+  do {
+      await fetch(`https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=${limit}&offset=${offset}&sort=price%3Aasc`)
+      .then((res) => res.json())
+      .then((data) => {
+        for (var i = 0; i < data.data.list.length; i++){
+          if(data.data.list[i].price_old > min_price && data.data.list[i].price_old < max_price && games_list_full == false){
+            best_games.push(data.data.list[i]);
+          }
+          if(best_games.length >= max_games){
+            games_list_full = true
+          }
+          if(games_list_full == true){
+            break;
+          }
+        }
+        offset += limit;
+      })
+      .catch((error) => console.error('Error', error))
+  } while(games_list_full == false)
+  return res.json(best_games)
 })
 
 app.get("/deals/:appid/", (req, res) => {
