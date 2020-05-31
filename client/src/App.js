@@ -5,7 +5,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Fuse from "fuse.js";
 import "./App.css";
 import Top100Table from "./components/Top100Table";
 import TopDeals from "./components/TopDeals";
@@ -50,7 +49,6 @@ class App extends Component {
       return <div>Loading...</div>;
     } else {
       return (
-        
         <Router>
           <Switch>
             {/* <Route path="/" exact component={Home} /> */}
@@ -72,11 +70,7 @@ class App extends Component {
               path="/search/:term"
               exact
               render={(props) => (
-                <SearchResults
-                  {...props}
-                  key={props.match.params.term}
-                  apps={this.state.apps}
-                />
+                <SearchResults {...props} key={props.match.params.term} />
               )}
             />
             <Route render={() => <Redirect to="/" />} />
@@ -91,7 +85,7 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <SearchBar getIdByName={this.props.getIdByName} />
+        <SearchBar />
         <h1>This is the home page</h1>
         <Top100Table />
         <TopDeals getIdByName={this.props.getIdByName} />
@@ -124,37 +118,11 @@ class SearchResults extends Component {
     };
   }
 
-  async componentDidMount() {
-    // this.search(this.props.match.params.term).then((data) => {
-    //   console.log(data);
-    //   this.setState({ isLoaded: true, results: data });
-    // });
-    const data = await this.search(this.props.match.params.term);
-
-    this.setState({ isLoaded: true, results: data });
+  componentDidMount() {
+    fetch(`/steam/search/${this.props.match.params.term}`)
+      .then((res) => res.json())
+      .then((data) => this.setState({ isLoaded: true, results: data }));
   }
-
-  search = async (term) => {
-    const options = {
-      // isCaseSensitive: false,
-      // includeScore: false,
-      // shouldSort: true,
-      // includeMatches: false,
-      // findAllMatches: false,
-      // minMatchCharLength: 1,
-      // location: 0,
-      threshold: 0.167,
-      // distance: 100,
-      // useExtendedSearch: false,
-      keys: ["name"],
-    };
-
-    const fuse = new Fuse(this.props.apps, options);
-
-    const pattern = term;
-
-    return fuse.search(pattern);
-  };
 
   render() {
     if (!this.state.isLoaded) {
