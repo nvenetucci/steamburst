@@ -1,6 +1,7 @@
 const express = require("express");
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const Fuse = require("fuse.js");
 require("dotenv").config();
 const app = express();
 const port = 5000;
@@ -9,6 +10,31 @@ app.get("/steam/applist", (req, res) => {
   fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
     .then((res) => res.json())
     .then((data) => res.json(data));
+});
+
+app.get("/steam/search/:term", (req, res) => {
+  fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
+    .then((res) => res.json())
+    .then((data) => {
+      const options = {
+        // isCaseSensitive: false,
+        // includeScore: false,
+        // shouldSort: true,
+        // includeMatches: false,
+        // findAllMatches: false,
+        // minMatchCharLength: 1,
+        // location: 0,
+        threshold: 0.167,
+        // distance: 100,
+        // useExtendedSearch: false,
+        keys: ["name"],
+      };
+
+      const fuse = new Fuse(data.applist.apps, options);
+
+      res.json(fuse.search(req.params.term));
+    })
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/steam/top100", (req, res) => {
@@ -154,14 +180,14 @@ app.get("/deals/", async (req, res) => {
 })
 
 app.get("/deals/:appid/", (req, res) => {
-  api_key=process.env.IS_THERE_ANY_DEAL_KEY
-  if(isNaN(req.params.appid)){
+  api_key = process.env.IS_THERE_ANY_DEAL_KEY;
+  if (isNaN(req.params.appid)) {
     fetch(
       `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=${api_key}%09&plains=${req.params.appid}`
     )
-    .then((res) => res.json())
-    .then((data) => res.json(data))
-    .catch((error) => console.error('Error', error))
+      .then((res) => res.json())
+      .then((data) => res.json(data))
+      .catch((error) => console.error("Error", error));
   } else {
     // get the title of the game in "plains" format
     fetch(
@@ -170,19 +196,16 @@ app.get("/deals/:appid/", (req, res) => {
       .then((res) => res.json())
       .then((data) => {
         // use the plains title to request deals from all available sites
-        plain = data.data.plain
+        plain = data.data.plain;
         fetch(
           `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/game/prices/?key=${api_key}%09&plains=${plain}`
         )
-        .then((res) => res.json())
-        .then((data) => res.json(data))
-        .catch((error) => console.error('Error', error))
-      })
-    }
-  })
-
-
-
+          .then((res) => res.json())
+          .then((data) => res.json(data))
+          .catch((error) => console.error("Error", error));
+      });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
