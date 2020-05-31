@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SearchBar from "../SearchBar";
+import NavBar from "../NavBar";
 
 class SearchResults extends Component {
   constructor(props) {
@@ -21,13 +21,14 @@ class SearchResults extends Component {
     if (!this.state.isLoaded) {
       return (
         <div>
+          <NavBar prevTerm={this.props.match.params.term} />
           <p>Loading...</p>
         </div>
       );
     } else {
       return (
         <div className="SearchResults">
-          <SearchBar prevTerm={this.props.match.params.term} />
+          <NavBar prevTerm={this.props.match.params.term} />
           <h1>This is the search results page</h1>
           <p>Showing results for "{this.props.match.params.term}"</p>
           <ul>
