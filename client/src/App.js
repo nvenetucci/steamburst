@@ -50,6 +50,7 @@ class App extends Component {
       return <div>Loading...</div>;
     } else {
       return (
+        
         <Router>
           <Switch>
             {/* <Route path="/" exact component={Home} /> */}
@@ -93,7 +94,7 @@ class Home extends Component {
         <SearchBar getIdByName={this.props.getIdByName} />
         <h1>This is the home page</h1>
         <Top100Table />
-        <TopDeals />
+        <TopDeals getIdByName={this.props.getIdByName} />
       </div>
     );
   }

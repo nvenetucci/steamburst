@@ -16,6 +16,16 @@ class TopDeals extends Component {
         .then((data) => this.setState({isLoaded: true, deal_data: data}));
     }
 
+    checkIfOnSteam(name, shop_url) {
+        var temp;
+        try{
+            temp = this.props.getIdByName(name);
+        } catch (e) {
+            return <a href={shop_url}>{name}</a>
+        }
+        return <Link to={`/app/${temp}`}>{name}</Link>;
+    }
+
     render() {
         var { isLoaded, deal_data } = this.state;
 
@@ -41,7 +51,7 @@ class TopDeals extends Component {
                         {deal_data.data.list.map((app, index) => (
                             <tr key={index}>
                                 <td>
-                                    <Link to={`/app/${242760}`}>{app.title}</Link>
+                                    {this.checkIfOnSteam(app.title, app.urls.buy)}
                                 </td>
                                 <td>{app.price_new}</td>
                                 <td>{app.price_old}</td>

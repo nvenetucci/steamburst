@@ -123,7 +123,7 @@ app.get("/twitch/:gameid/streams", (req, res) => {
 app.get("/deals/", (req, res) => {
   api_key=process.env.IS_THERE_ANY_DEAL_KEY
   fetch(
-    `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=100&shops=steam&sort=price%3Aasc`
+    `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=100&sort=price%3Aasc`
   )
     .then((res) => res.json())
     .then((data) => res.json(data))
