@@ -48,7 +48,9 @@ class TopDeals extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {deal_data.data.list.map((app, index) => (
+                        {/* {deal_data.data.list.map((app, index) => ( */}
+                        {deal_data.map((app, index) => (
+
                             <tr key={index}>
                                 <td>
                                     {this.checkIfOnSteam(app.title, app.urls.buy)}
