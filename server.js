@@ -68,15 +68,15 @@ app.get("/steam/search/:term", (req, res) => {
         // findAllMatches: false,
         // minMatchCharLength: 1,
         // location: 0,
-        threshold: 0.167,
-        // distance: 100,
+        threshold: 0.08,
+        distance: 50,
         // useExtendedSearch: false,
         keys: ["name"],
       };
 
       const fuse = new Fuse(apps.applist.apps, options);
 
-      res.json(fuse.search(req.params.term));
+      res.json(fuse.search(req.params.term, { limit: 100 }));
     })
     .catch((err) => console.log("Request failed", err));
 });
@@ -106,7 +106,8 @@ app.get("/steam/top100", (req, res) => {
       });
 
       res.json(data);
-    });
+    })
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/steam/app/:appid", (req, res) => {
@@ -114,7 +115,8 @@ app.get("/steam/app/:appid", (req, res) => {
     `https://store.steampowered.com/api/appdetails/?appids=${req.params.appid}`
   )
     .then((res) => res.json())
-    .then((data) => res.json(data));
+    .then((data) => res.json(data))
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/steam/app/:appid/players", (req, res) => {
@@ -122,7 +124,8 @@ app.get("/steam/app/:appid/players", (req, res) => {
     `https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${req.params.appid}`
   )
     .then((res) => res.json())
-    .then((data) => res.json(data));
+    .then((data) => res.json(data))
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/twitch/validate", (req, res) => {
@@ -134,7 +137,8 @@ app.get("/twitch/validate", (req, res) => {
 
   fetch("https://id.twitch.tv/oauth2/validate", options)
     .then((res) => res.json())
-    .then((data) => res.json(data));
+    .then((data) => res.json(data))
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/twitch/:game", (req, res) => {
@@ -147,7 +151,8 @@ app.get("/twitch/:game", (req, res) => {
 
   fetch(`https://api.twitch.tv/helix/games?name=${req.params.game}`, options)
     .then((res) => res.json())
-    .then((data) => res.json(data));
+    .then((data) => res.json(data))
+    .catch((err) => console.log("Request failed", err));
 });
 
 app.get("/twitch/:gameid/streams", (req, res) => {
@@ -190,38 +195,43 @@ app.get("/twitch/:gameid/streams", (req, res) => {
   getStreams(init);
 });
 
-
 app.get("/deals/", async (req, res) => {
-  api_key=process.env.IS_THERE_ANY_DEAL_KEY
+  api_key = process.env.IS_THERE_ANY_DEAL_KEY;
   best_games = [];
   min_price = 10;
   max_price = 61;
   games_list_full = false;
-  offset = 0
-  limit = 3000
-  max_games = 100
+  offset = 0;
+  limit = 3000;
+  max_games = 100;
 
   do {
-      await fetch(`https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=${limit}&offset=${offset}&sort=price%3Aasc`)
+    await fetch(
+      `https://private-anon-f775a85414-itad.apiary-proxy.com/v01/deals/list/?key=${api_key}&limit=${limit}&offset=${offset}&sort=price%3Aasc`
+    )
       .then((res) => res.json())
       .then((data) => {
-        for (var i = 0; i < data.data.list.length; i++){
-          if(data.data.list[i].price_old > min_price && data.data.list[i].price_old < max_price && games_list_full == false){
+        for (var i = 0; i < data.data.list.length; i++) {
+          if (
+            data.data.list[i].price_old > min_price &&
+            data.data.list[i].price_old < max_price &&
+            games_list_full == false
+          ) {
             best_games.push(data.data.list[i]);
           }
-          if(best_games.length >= max_games){
-            games_list_full = true
+          if (best_games.length >= max_games) {
+            games_list_full = true;
           }
-          if(games_list_full == true){
+          if (games_list_full == true) {
             break;
           }
         }
         offset += limit;
       })
-      .catch((error) => console.error('Error', error))
-  } while(games_list_full == false)
-  return res.json(best_games)
-})
+      .catch((error) => console.error("Error", error));
+  } while (games_list_full == false);
+  return res.json(best_games);
+});
 
 app.get("/deals/:appid/", (req, res) => {
   api_key = process.env.IS_THERE_ANY_DEAL_KEY;

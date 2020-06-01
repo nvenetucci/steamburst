@@ -16,7 +16,8 @@ class SteamTop100 extends Component {
   componentDidMount() {
     fetch("/steam/top100")
       .then((res) => res.json())
-      .then((data) => this.setState({ isLoaded: true, top100: data }));
+      .then((data) => this.setState({ isLoaded: true, top100: data }))
+      .catch((err) => console.log("Request failed", err));
   }
 
   paginate = (event) => {
