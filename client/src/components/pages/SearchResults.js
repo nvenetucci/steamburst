@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import NavBar from "../NavBar";
 import SearchResultsTable from "../SearchResultsTable";
+import Spinner from "react-bootstrap/Spinner";
 
 class SearchResults extends Component {
   constructor(props) {
@@ -29,18 +30,6 @@ class SearchResults extends Component {
     }
   };
 
-  // render() {
-  //     return (
-  //       <div className="SearchResults">
-  //         <p>Showing results for "{this.props.match.params.term}"</p>
-  //         <ul>
-  //           {this.state.results.map((app, index) => (
-  //             <li key={index}>{app.item.name}</li>
-  //           ))}
-  //         </ul>
-  //       </div>
-  //     );
-  // }
   render() {
     const { isLoaded, results, currentPage, appsPerPage } = this.state;
 
@@ -48,8 +37,28 @@ class SearchResults extends Component {
       return (
         <div>
           <NavBar prevTerm={this.props.match.params.term} />
-          <p>Loading...</p>
+          <div className="container mt-5">
+            {"Found "}
+            <Spinner animation="border" role="status" size="sm">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+            {` result(s) for ${this.props.match.params.term}`}
+          </div>
         </div>
+      );
+    }
+
+    if (results.length === 0) {
+      return (
+        <React.Fragment>
+          <NavBar prevTerm={this.props.match.params.term} />
+          <div className="container mt-5">
+            <p>
+              Found <strong>{results.length}</strong> result(s) for "
+              {this.props.match.params.term}"
+            </p>
+          </div>
+        </React.Fragment>
       );
     }
 
@@ -75,6 +84,10 @@ class SearchResults extends Component {
       <div className="SearchResults">
         <NavBar prevTerm={this.props.match.params.term} />
         <div className="container mt-5">
+          <p>
+            Found <strong>{results.length}</strong> result(s) for "
+            {this.props.match.params.term}"
+          </p>
           <SearchResultsTable apps={currentApps} />
           <Pagination onClick={this.paginate}>{pageNumbers}</Pagination>
         </div>

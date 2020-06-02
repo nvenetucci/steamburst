@@ -12,24 +12,26 @@ class CurrentPlayers extends Component {
   componentDidMount() {
     fetch(`/steam/app/${this.props.appid}/players`)
       .then((res) => res.json())
-      .then((json) => this.setState({ isLoaded: true, players: json }));
+      .then((data) => this.setState({ isLoaded: true, players: data }));
   }
 
   render() {
     const { isLoaded, players } = this.state;
 
     if (!isLoaded) {
+      return <span>Loading...</span>;
+    }
+
+    if (players.response.player_count !== undefined) {
       return (
-        <div>
-          <p>Loading...</p>
-        </div>
+        <span>
+          {players.response.player_count
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        </span>
       );
     } else {
-      return (
-        <div className="CurrentPlayers">
-          <p>Current Players: {players.response.player_count}</p>
-        </div>
-      );
+      return <span>---</span>;
     }
   }
 }

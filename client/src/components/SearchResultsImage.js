@@ -18,6 +18,12 @@ class SearchResultsImage extends Component {
       .catch((err) => console.log("Request failed", err));
   }
 
+  handleOnError = (event) => {
+    if (event.target.src !== unknown) {
+      event.target.src = unknown;
+    }
+  };
+
   render() {
     const { isLoaded, details } = this.state;
     const appid = this.props.appid;
@@ -27,7 +33,13 @@ class SearchResultsImage extends Component {
     }
 
     if (details !== null && details[appid].data !== undefined) {
-      return <Image src={details[appid].data.header_image} fluid />;
+      return (
+        <Image
+          src={details[appid].data.header_image}
+          fluid
+          onError={this.handleOnError}
+        />
+      );
     } else {
       return <Image src={unknown} width="141.35" height="66.05" />;
     }

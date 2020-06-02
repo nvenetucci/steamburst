@@ -11,7 +11,10 @@ class AppDetails extends Component {
       <div className="AppDetails">
         <NavBar />
         <SteamDetails appid={this.props.match.params.appid} />
-        <CurrentPlayers appid={this.props.match.params.appid} />
+        <p>
+          {"Current Players: "}
+          <CurrentPlayers appid={this.props.match.params.appid} />
+        </p>
         <TwitchDetails
           appname={this.props.getNameById(this.props.match.params.appid)}
         />

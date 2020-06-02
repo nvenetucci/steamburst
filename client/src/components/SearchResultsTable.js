@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import SearchResultsImage from "./SearchResultsImage";
+import CurrentPlayers from "./CurrentPlayers";
 
 class SearchResultsTable extends Component {
   render() {
@@ -19,10 +20,11 @@ class SearchResultsTable extends Component {
             <tr key={app.item.appid}>
               <td>
                 <SearchResultsImage appid={app.item.appid} />
-                {/* {app.item.appid} */}
               </td>
               <td className="align-middle">{app.item.name}</td>
-              <td className="align-middle">Placeholder</td>
+              <td className="align-middle">
+                <CurrentPlayers appid={app.item.appid} />
+              </td>
             </tr>
           ))}
         </tbody>
