@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import SearchResultsImage from "./SearchResultsImage";
 import CurrentPlayers from "./CurrentPlayers";
+import SearchResultsData from "./SearchResultsData";
 
 class SearchResultsTable extends Component {
   render() {
@@ -18,10 +17,7 @@ class SearchResultsTable extends Component {
         <tbody>
           {this.props.apps.map((app) => (
             <tr key={app.item.appid}>
-              <td>
-                <SearchResultsImage appid={app.item.appid} />
-              </td>
-              <td className="align-middle">{app.item.name}</td>
+              <SearchResultsData appid={app.item.appid} name={app.item.name} />
               <td className="align-middle">
                 <CurrentPlayers appid={app.item.appid} />
               </td>

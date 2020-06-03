@@ -12,7 +12,8 @@ class CurrentPlayers extends Component {
   componentDidMount() {
     fetch(`/steam/app/${this.props.appid}/players`)
       .then((res) => res.json())
-      .then((data) => this.setState({ isLoaded: true, players: data }));
+      .then((data) => this.setState({ isLoaded: true, players: data }))
+      .catch((err) => console.log("Request failed", err));
   }
 
   render() {
