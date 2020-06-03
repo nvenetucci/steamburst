@@ -76,7 +76,7 @@ app.get("/steam/search/:term", (req, res) => {
 
       const fuse = new Fuse(apps.applist.apps, options);
 
-      res.json(fuse.search(req.params.term, { limit: 100 }));
+      res.json(fuse.search(req.params.term, { limit: 30 }));
     })
     .catch((err) => console.log("Request failed", err));
 });
