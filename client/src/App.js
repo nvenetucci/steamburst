@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("/steam/applist")
+    fetch("/api/steam/applist")
       .then((res) => res.json())
       .then((data) =>
         this.setState({ isLoaded: true, apps: data.applist.apps })
