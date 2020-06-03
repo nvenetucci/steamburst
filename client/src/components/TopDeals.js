@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import SearchResultsImage from "./SearchResultsImage";
 
 class TopDeals extends Component {
     constructor(props) {
@@ -18,13 +19,15 @@ class TopDeals extends Component {
 
     checkIfOnSteam(name, shop_url) {
         var temp;
-        try{
-            temp = this.props.getIdByName(name);
-        } catch (e) {
+        temp = this.props.getIdByName(name);
+        if(temp == undefined){
             return <a href={shop_url}>{name}</a>
+        } else {
+            return <Link to={`/app/${temp}`}>{name}</Link>;
         }
-        return <Link to={`/app/${temp}`}>{name}</Link>;
     }
+
+
 
     render() {
         var { isLoaded, deal_data } = this.state;
@@ -39,6 +42,7 @@ class TopDeals extends Component {
                 <table>
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Title</th>
                             <th>Current Price</th>
                             <th>Previous Price</th>
@@ -48,10 +52,14 @@ class TopDeals extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {deal_data.data.list.map((app, index) => ( */}
                         {deal_data.map((app, index) => (
 
                             <tr key={index}>
+                                <td>
+                                    {/* <img src={this.props.getThumbnail("242760")} alt="" ></img> */}
+                                    {/* {this.props.getIdByName(app.title)} */}
+                                    <SearchResultsImage appid={this.props.getIdByName(app.title)} />
+                                </td>
                                 <td>
                                     {this.checkIfOnSteam(app.title, app.urls.buy)}
                                 </td>

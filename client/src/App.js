@@ -35,9 +35,17 @@ class App extends Component {
   };
 
   getIdByName = (appname) => {
-    const obj = this.state.apps.find((app) => `${app.name}` === appname);
+    // const obj = this.state.apps.find((app) => `${app.name}` === appname);
 
-    return obj.appid;
+    // return obj.appid;
+    
+    const obj = this.state.apps.find((app) => `${app.name}` === appname)
+
+    if(obj === undefined){
+      return undefined;
+    } else {
+      return obj.appid;
+    }
   };
 
   render() {
