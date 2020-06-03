@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import Table from "react-bootstrap/Table";
+import Badge from "react-bootstrap/Badge";
 
 class SteamDetails extends Component {
   constructor(props) {
@@ -29,17 +34,51 @@ class SteamDetails extends Component {
           </ul>
         </div>
       );
-    } else {
-      return (
-        <div className="SteamDetails">
-          <ul>
-            <li>{`App ID: ${appid}`}</li>
-            <li>{`Name: ${details[appid].data.name}`}</li>
-            <li>{`Description: ${details[appid].data.short_description}`}</li>
-          </ul>
-        </div>
-      );
     }
+
+    return (
+      <React.Fragment>
+        <Row className="justify-content-center">
+          <Col sm={5} className="text-center">
+            <Image
+              src={details[appid].data.header_image}
+              width="460"
+              height="215"
+              fluid
+            />
+            <Table striped bordered variant="dark" size="md">
+              <tbody className="text-left">
+                <tr>
+                  <td style={{ width: "30%" }}>Name</td>
+                  <td>{details[appid].data.name}</td>
+                </tr>
+                <tr>
+                  <td>Developer</td>
+                  <td>{details[appid].data.developers[0]}</td>
+                </tr>
+                <tr>
+                  <td>Publisher</td>
+                  <td>{details[appid].data.publishers[0]}</td>
+                </tr>
+                <tr>
+                  <td>Release Date</td>
+                  <td>{details[appid].data.release_date.date}</td>
+                </tr>
+                <tr>
+                  <td colSpan="2">
+                    {details[appid].data.genres.map((genre, index) => (
+                      <Badge key={index} variant="secondary" className="mr-1">
+                        {genre.description}
+                      </Badge>
+                    ))}
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
   }
 }
 

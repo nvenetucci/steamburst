@@ -20,19 +20,19 @@ class CurrentPlayers extends Component {
     const { isLoaded, players } = this.state;
 
     if (!isLoaded) {
-      return <span>Loading...</span>;
+      return <span className="text-white">Loading...</span>;
     }
 
     if (players.response.player_count !== undefined) {
       return (
-        <span>
+        <React.Fragment>
           {players.response.player_count
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </span>
+        </React.Fragment>
       );
     } else {
-      return <span>---</span>;
+      return <React.Fragment>0</React.Fragment>;
     }
   }
 }

@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 
 class TwitchDetails extends Component {
   constructor(props) {
@@ -21,21 +24,73 @@ class TwitchDetails extends Component {
   render() {
     const { isLoaded, streams } = this.state;
 
+    const twitchStyle = {
+      backgroundColor: "BlueViolet",
+      border: "solid",
+      borderRadius: 10,
+      borderWidth: 3,
+      borderColor: "DarkViolet",
+      color: "white",
+    };
+
     if (!isLoaded) {
       return (
-        <div>
-          <p>Loading...</p>
-          <p>Loading...</p>
-        </div>
-      );
-    } else {
-      return (
-        <div className="TwitchCount">
-          <p>Streaming Now: {streams.length}</p>
-          <p>Viewers: {streams.reduce((a, b) => a + b.viewer_count, 0)}</p>
-        </div>
+        <React.Fragment>
+          <Row className="justify-content-between">
+            <Col sm={2}></Col>
+            <Col sm={3} style={twitchStyle} className="text-center mb-4">
+              <br />
+              <br />
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+              <br />
+              <br />
+              <br />
+            </Col>
+            <Col sm={3} style={twitchStyle} className="text-center mb-4">
+              <br />
+              <br />
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+              <br />
+              <br />
+              <br />
+            </Col>
+            <Col sm={2}></Col>
+          </Row>
+        </React.Fragment>
       );
     }
+
+    return (
+      <React.Fragment>
+        <Row className="justify-content-between">
+          <Col sm={2}></Col>
+          <Col sm={3} style={twitchStyle} className="text-center mb-4">
+            <br />
+            <h5>Streaming</h5>
+            <h4>
+              {streams.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </h4>
+            <br />
+          </Col>
+          <Col sm={3} style={twitchStyle} className="text-center mb-4">
+            <br />
+            <h5>Viewers</h5>
+            <h4>
+              {streams
+                .reduce((a, b) => a + b.viewer_count, 0)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </h4>
+            <br />
+          </Col>
+          <Col sm={2}></Col>
+        </Row>
+      </React.Fragment>
+    );
   }
 }
 
