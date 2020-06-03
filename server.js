@@ -5,7 +5,8 @@ const Fuse = require("fuse.js");
 const fs = require("fs");
 require("dotenv").config();
 const app = express();
-const port = 5000;
+
+const port = process.env.PORT || 5000;
 
 const data = fs.readFileSync("applist.json");
 const appList = JSON.parse(data);
@@ -264,5 +265,5 @@ app.get("/deals/:appid/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running on port: ${port}`);
 });
