@@ -55,7 +55,7 @@ class SteamTop100 extends Component {
 
     return (
       <div className="container mt-5">
-        <span className="float-right mb-1">{top100.updated}</span>
+        <span className="float-right mb-1 text-white">{top100.updated}</span>
         <SteamTop100Table apps={currentApps} indexOfLastApp={indexOfLastApp} />
         <Pagination onClick={this.paginate}>{pageNumbers}</Pagination>
       </div>

@@ -213,6 +213,8 @@ app.get("/deals/", async (req, res) => {
       .then((data) => {
         for (var i = 0; i < data.data.list.length; i++) {
           if (
+            data.data.list[i].shop.id != "itchio" &&
+            data.data.list[i].shop.id != "amazonus" &&
             data.data.list[i].price_old > min_price &&
             data.data.list[i].price_old < max_price &&
             games_list_full == false

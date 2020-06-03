@@ -9,6 +9,7 @@ class Home extends Component {
       <div className="Home">
         <NavBar />
         <SteamTop100 />
+        <br></br>
         <TopDeals getIdByName={this.props.getIdByName} />
       </div>
     );

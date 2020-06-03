@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Pagination from "react-bootstrap/Pagination";
+import TopDealsTable from "./TopDealsTable";
 
 class TopDeals extends Component {
     constructor(props) {
@@ -7,6 +9,8 @@ class TopDeals extends Component {
         this.state = {
             isLoaded: false,
             deal_data: [],
+            currentPage: 1,
+            appsPerPage: 10,
         };
     }
 
@@ -16,58 +20,62 @@ class TopDeals extends Component {
         .then((data) => this.setState({isLoaded: true, deal_data: data}));
     }
 
+    paginate = (event) => {
+        event.preventDefault();
+    
+        if (this.currentPage !== event.target.text) {
+          this.setState({ currentPage: event.target.text });
+        }
+      };
+
     checkIfOnSteam(name, shop_url) {
         var temp;
-        try{
-            temp = this.props.getIdByName(name);
-        } catch (e) {
+        temp = this.props.getIdByName(name);
+        if(temp === undefined){
             return <a href={shop_url}>{name}</a>
+        } else {
+            return <Link to={`/app/${temp}`}>{name}</Link>;
         }
-        return <Link to={`/app/${temp}`}>{name}</Link>;
     }
 
     render() {
-        var { isLoaded, deal_data } = this.state;
+        
+        const { isLoaded, deal_data, currentPage, appsPerPage } = this.state;
 
         if (!isLoaded) {
-            return <div>Loading...</div>;
-        } else {
-
             return (
-            <div className="TopDeals">
-                <h1>Top Deals</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Current Price</th>
-                            <th>Previous Price</th>
-                            <th>Savings</th>
-                            <th>Shop</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* {deal_data.data.list.map((app, index) => ( */}
-                        {deal_data.map((app, index) => (
-
-                            <tr key={index}>
-                                <td>
-                                    {this.checkIfOnSteam(app.title, app.urls.buy)}
-                                </td>
-                                <td>{app.price_new}</td>
-                                <td>{app.price_old}</td>
-                                <td>{app.price_cut}% OFF</td>
-                                <td>
-                                    <a href={app.urls.buy}>{app.shop.name}</a>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div class="text-center">
+              <div class="spinner-border text-light" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </div>
-            );
+            )
         }
+
+        const indexOfLastApp = currentPage * appsPerPage;
+        const indexOfFirstApp = indexOfLastApp - appsPerPage;
+        const currentApps = deal_data.slice(indexOfFirstApp, indexOfLastApp);
+        const pageNumbers = [];
+
+        for (
+            let number = 1;
+            number <= Math.ceil(deal_data.length / appsPerPage);
+            number++
+          ) {
+            pageNumbers.push(
+              <Pagination.Item key={number} active={number === parseInt(currentPage)}>
+                {number}
+              </Pagination.Item>
+            );
+          }
+
+        return (
+        <div className="TopDeals container mt-5">
+            <h1 className={"display-1 text-center text-white"} >Top Deals</h1>
+            <TopDealsTable apps={currentApps} indexOfLastApp={indexOfLastApp} getIdByName={this.props.getIdByName} />
+            <Pagination onClick={this.paginate}>{pageNumbers}</Pagination>
+        </div>
+        );
     }
 }
 

@@ -33,8 +33,12 @@ class SearchResultsData extends Component {
     if (!isLoaded) {
       return (
         <React.Fragment>
-          <td>Loading...</td>
+          <td>
+            <Image src={unknown} width="141.35" height="66.05" />
+          </td>
           <td className="align-middle">{this.props.name}</td>
+          {/* <td>Loading...</td>
+          <td className="align-middle">{this.props.name}</td> */}
         </React.Fragment>
       );
     }
