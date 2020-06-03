@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("/api/steam/applist")
+    fetch("/steam/applist")
       .then((res) => res.json())
       .then((data) =>
         this.setState({ isLoaded: true, apps: data.applist.apps })
@@ -38,10 +38,10 @@ class App extends Component {
     // const obj = this.state.apps.find((app) => `${app.name}` === appname);
 
     // return obj.appid;
-    
-    const obj = this.state.apps.find((app) => `${app.name}` === appname)
 
-    if(obj === undefined){
+    const obj = this.state.apps.find((app) => `${app.name}` === appname);
+
+    if (obj === undefined) {
       return undefined;
     } else {
       return obj.appid;
