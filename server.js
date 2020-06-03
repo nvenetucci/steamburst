@@ -43,7 +43,7 @@ app.get("/steam/applist/update", (req, res) => {
     .catch((err) => console.log("Request failed", err));
 });
 
-app.get("/steam/applist", (req, res) => {
+app.get("/api/steam/applist", (req, res) => {
   fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
     .then((res) => res.json())
     .then((data) => {
