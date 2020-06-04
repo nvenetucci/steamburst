@@ -81,7 +81,7 @@ class SteamDetails extends Component {
               height="215"
               fluid
             />
-            <Table striped bordered variant="dark" size="md">
+            <Table striped bordered variant="dark" responsive>
               <tbody className="text-left">
                 <tr>
                   <td style={{ width: "30%" }}>Name</td>

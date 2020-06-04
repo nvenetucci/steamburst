@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 class SteamTop100Table extends Component {
   render() {
     return (
-      <Table striped bordered variant="dark" className={"table-responsive-sm"}>
+      <Table striped bordered variant="dark" responsive>
         <thead>
           <tr>
             <th style={{ width: "5%" }}>#</th>
