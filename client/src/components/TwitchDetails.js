@@ -16,7 +16,7 @@ class TwitchDetails extends Component {
   }
 
   componentDidMount() {
-    fetch(`/twitch/${this.props.appname.replace(/[\u{0080}-\u{FFFF}]/gu, "")}`)
+    fetch(`/twitch/${this.props.appname}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.data.length === 0) {
@@ -100,7 +100,9 @@ class TwitchDetails extends Component {
         <Row className="justify-content-between">
           <Col sm={1}></Col>
           <Col sm={1} className="text-center mb-4 px-0 mr-3">
-            <a href={"https://twitch.tv/xqcow"}>
+            <a
+              href={`https://www.twitch.tv/directory/game/${this.props.appname}`}
+            >
               <Image
                 src={twitch_logo}
                 style={{ ...twitchStyle, width: "4rem" }}

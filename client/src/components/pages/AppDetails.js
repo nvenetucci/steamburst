@@ -36,7 +36,9 @@ class AppDetails extends Component {
             </thead>
           </Table>
 
-          <TwitchDetails appname={appname} />
+          <TwitchDetails
+            appname={appname.replace(/[\u{0080}-\u{FFFF}]/gu, "")}
+          />
 
           <SteamDetails appid={this.props.match.params.appid} />
         </Container>
