@@ -9,20 +9,28 @@ class TwitchDetails extends Component {
     this.state = {
       isLoaded: false,
       streams: [],
+      noData: false,
     };
   }
 
   componentDidMount() {
     fetch(`/twitch/${this.props.appname.replace(/[\u{0080}-\u{FFFF}]/gu, "")}`)
       .then((res) => res.json())
-      .then((json) => fetch(`/twitch/${json.data[0].id}/streams`))
-      .then((res) => res.json())
-      .then((json) => this.setState({ isLoaded: true, streams: json }))
+      .then((json) => {
+        if (json.data.length === 0) {
+          this.setState({ isLoaded: true, noData: true });
+        } else {
+          fetch(`/twitch/${json.data[0].id}/streams`)
+            .then((res) => res.json())
+            .then((json) => this.setState({ isLoaded: true, streams: json }))
+            .catch((err) => console.log("Request failed", err));
+        }
+      })
       .catch((err) => console.log("Request failed", err));
   }
 
   render() {
-    const { isLoaded, streams } = this.state;
+    const { isLoaded, streams, noData } = this.state;
 
     const twitchStyle = {
       backgroundColor: "BlueViolet",
@@ -56,6 +64,25 @@ class TwitchDetails extends Component {
               </Spinner>
               <br />
               <br />
+              <br />
+            </Col>
+            <Col sm={2}></Col>
+          </Row>
+        </React.Fragment>
+      );
+    }
+
+    if (noData) {
+      return (
+        <React.Fragment>
+          <Row className="justify-content-between">
+            <Col sm={2}></Col>
+            <Col sm={6} style={twitchStyle} className="text-center mb-4">
+              <br />
+              <h5>
+                Whoops, we were unable to retrieve Twitch stats about this
+                application. Sorry!{" "}
+              </h5>
               <br />
             </Col>
             <Col sm={2}></Col>

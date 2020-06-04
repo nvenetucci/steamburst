@@ -37,7 +37,7 @@ class SearchResults extends Component {
       return (
         <div>
           <NavBar prevTerm={this.props.match.params.term} />
-          <div className="container mt-5">
+          <div className="container mt-5 text-white">
             {"Found "}
             <Spinner animation="border" role="status" size="sm">
               <span className="sr-only">Loading...</span>
@@ -53,7 +53,7 @@ class SearchResults extends Component {
         <React.Fragment>
           <NavBar prevTerm={this.props.match.params.term} />
           <div className="container mt-5">
-            <p>
+            <p className="text-white">
               Found <strong>{results.length}</strong> result(s) for "
               {this.props.match.params.term}"
             </p>
@@ -84,7 +84,7 @@ class SearchResults extends Component {
       <div className="SearchResults">
         <NavBar prevTerm={this.props.match.params.term} />
         <div className="container mt-5">
-          <p>
+          <p className="text-white">
             Found <strong>{results.length}</strong> result(s) for "
             {this.props.match.params.term}"
           </p>
