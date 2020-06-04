@@ -24,6 +24,14 @@ class SteamDetails extends Component {
     const { isLoaded, details } = this.state;
     const appid = this.props.appid;
 
+    // const steamStyle = {
+    //   border: "solid",
+    //   borderRadius: 10,
+    //   borderWidth: 3,
+    //   borderColor: "DarkViolet",
+    //   color: "white",
+    // };
+
     if (!isLoaded) {
       return (
         <div>
@@ -33,6 +41,25 @@ class SteamDetails extends Component {
             <li>Loading...</li>
           </ul>
         </div>
+      );
+    }
+
+    if (details === null || details[appid].data === undefined) {
+      return (
+        <React.Fragment>
+          <Row className="justify-content-between">
+            <Col sm={2}></Col>
+            <Col sm={6} className="text-center mb-4 bg-dark">
+              <br />
+              <h5 className="text-white">
+                Sorry! We couldn't retrieve Steam data about this application.
+                It must not be available on the Steam store.
+              </h5>
+              <br />
+            </Col>
+            <Col sm={2}></Col>
+          </Row>
+        </React.Fragment>
       );
     }
 

@@ -80,7 +80,7 @@ class TwitchDetails extends Component {
             <Col sm={6} style={twitchStyle} className="text-center mb-4">
               <br />
               <h5>
-                Whoops, we were unable to retrieve Twitch stats about this
+                Whoops, we were unable to retrieve Twitch stats regarding this
                 application. Sorry!{" "}
               </h5>
               <br />
