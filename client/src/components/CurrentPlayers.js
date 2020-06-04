@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Spinner from "react-bootstrap/Spinner";
 
 class CurrentPlayers extends Component {
   constructor(props) {
@@ -20,7 +21,11 @@ class CurrentPlayers extends Component {
     const { isLoaded, players } = this.state;
 
     if (!isLoaded) {
-      return <span className="text-white">Loading...</span>;
+      return (
+        <Spinner animation="border" role="status" size="sm">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      );
     }
 
     if (players.response.player_count !== undefined) {

@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
+import Spinner from "react-bootstrap/Spinner";
 
 class SteamDetails extends Component {
   constructor(props) {
@@ -24,23 +25,30 @@ class SteamDetails extends Component {
     const { isLoaded, details } = this.state;
     const appid = this.props.appid;
 
-    // const steamStyle = {
-    //   border: "solid",
-    //   borderRadius: 10,
-    //   borderWidth: 3,
-    //   borderColor: "DarkViolet",
-    //   color: "white",
-    // };
+    const steamStyle = {
+      border: "solid",
+      borderRadius: 10,
+      borderWidth: 3,
+      borderColor: "DimGray",
+      color: "white",
+    };
 
     if (!isLoaded) {
       return (
-        <div>
-          <ul>
-            <li>Loading...</li>
-            <li>Loading...</li>
-            <li>Loading...</li>
-          </ul>
-        </div>
+        <React.Fragment>
+          <Row className="justify-content-between">
+            <Col sm={2}></Col>
+            <Col sm={5} className="text-center mb-4">
+              <br />
+              <br />
+              <Spinner animation="border" role="status" variant="light">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+              <br />
+            </Col>
+            <Col sm={2}></Col>
+          </Row>
+        </React.Fragment>
       );
     }
 
@@ -49,7 +57,7 @@ class SteamDetails extends Component {
         <React.Fragment>
           <Row className="justify-content-between">
             <Col sm={2}></Col>
-            <Col sm={6} className="text-center mb-4 bg-dark">
+            <Col sm={6} style={steamStyle} className="text-center mb-4 bg-dark">
               <br />
               <h5 className="text-white">
                 Sorry! We couldn't retrieve Steam data about this application.
