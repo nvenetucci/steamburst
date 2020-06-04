@@ -48,12 +48,14 @@ class SearchResultsData extends Component {
         return (
           <React.Fragment>
             <td>
-              <Image
-                src={details[appid].data.header_image}
-                width="141.35"
-                height="66.05"
-                onError={this.handleOnError}
-              />
+              <Link to={`/app/${appid}`}>
+                <Image
+                  src={details[appid].data.header_image}
+                  width="141.35"
+                  height="66.05"
+                  onError={this.handleOnError}
+                />
+              </Link>
             </td>
             <td className="align-middle">
               <Link style={{ color: "white" }} to={`/app/${appid}`}>
