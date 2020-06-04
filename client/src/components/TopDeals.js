@@ -71,7 +71,7 @@ class TopDeals extends Component {
 
         return (
         <div className="TopDeals container mt-5">
-            <h1 className={"display-1 text-center text-white"} >Top Deals</h1>
+            <h1 className={"display-4 text-left text-white"} >Top Deals</h1>
             <TopDealsTable apps={currentApps} indexOfLastApp={indexOfLastApp} getIdByName={this.props.getIdByName} />
             <Pagination onClick={this.paginate}>{pageNumbers}</Pagination>
         </div>
