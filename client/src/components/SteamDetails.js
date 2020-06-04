@@ -36,10 +36,17 @@ class SteamDetails extends Component {
       );
     }
 
+    if (details[appid].data == undefined){
+      return (
+        <div>Could Not Load</div>
+      )
+    }
+
     return (
       <React.Fragment>
         <Row className="justify-content-center">
           <Col sm={5} className="text-center">
+
             <Image
               src={details[appid].data.header_image}
               width="460"
