@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import Image from "react-bootstrap/Image";
+import ResponsiveEmbed from "react-bootstrap/ResponsiveEmbed";
 import twitch_logo from "../assets/twitch_logo.png";
 
 class TwitchDetails extends Component {
@@ -35,11 +36,11 @@ class TwitchDetails extends Component {
     const { isLoaded, streams, noData } = this.state;
 
     const twitchStyle = {
-      backgroundColor: "BlueViolet",
+      backgroundColor: "#6441a5",
       border: "solid",
       borderRadius: 10,
       borderWidth: 3,
-      borderColor: "DarkViolet",
+      borderColor: "#9146ff",
       color: "white",
     };
 
@@ -130,6 +131,22 @@ class TwitchDetails extends Component {
             <br />
           </Col>
           <Col sm={2}></Col>
+        </Row>
+
+        <Row className="justify-content-center">
+          <Col sm={10} style={twitchStyle} className="text-center mb-4">
+            <ResponsiveEmbed aspectRatio="16by9">
+              <iframe
+                title="TwitchEmbedded"
+                src={`https://player.twitch.tv/?channel=${streams[0].user_name}&parent=streamernews.example.com&muted=true&autoplay=false`}
+                height="720"
+                width="1280"
+                frameBorder="0"
+                scrolling="no"
+                allowFullScreen={true}
+              ></iframe>
+            </ResponsiveEmbed>
+          </Col>
         </Row>
       </React.Fragment>
     );
