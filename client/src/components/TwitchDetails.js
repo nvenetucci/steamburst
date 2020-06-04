@@ -133,21 +133,23 @@ class TwitchDetails extends Component {
           <Col sm={2}></Col>
         </Row>
 
-        <Row className="justify-content-center">
-          <Col sm={10} style={twitchStyle} className="text-center mb-4">
-            <ResponsiveEmbed aspectRatio="16by9">
-              <iframe
-                title="TwitchEmbedded"
-                src={`https://player.twitch.tv/?channel=${streams[0].user_name}&parent=streamernews.example.com&muted=true&autoplay=false`}
-                height="720"
-                width="1280"
-                frameBorder="0"
-                scrolling="no"
-                allowFullScreen={true}
-              ></iframe>
-            </ResponsiveEmbed>
-          </Col>
-        </Row>
+        {streams.length !== 0 && (
+          <Row className="justify-content-center">
+            <Col sm={10} style={twitchStyle} className="text-center mb-4">
+              <ResponsiveEmbed aspectRatio="16by9">
+                <iframe
+                  title="TwitchEmbedded"
+                  src={`https://player.twitch.tv/?channel=${streams[0].user_name}&parent=streamernews.example.com&muted=true&autoplay=false`}
+                  height="720"
+                  width="1280"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowFullScreen={true}
+                ></iframe>
+              </ResponsiveEmbed>
+            </Col>
+          </Row>
+        )}
       </React.Fragment>
     );
   }
