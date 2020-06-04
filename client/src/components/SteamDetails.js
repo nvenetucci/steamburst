@@ -41,6 +41,7 @@ class SteamDetails extends Component {
             <Col sm={5} className="text-center mb-4">
               <br />
               <br />
+              <br />
               <Spinner animation="border" role="status" variant="light">
                 <span className="sr-only">Loading...</span>
               </Spinner>
@@ -60,8 +61,8 @@ class SteamDetails extends Component {
             <Col sm={6} style={steamStyle} className="text-center mb-4 bg-dark">
               <br />
               <h5 className="text-white">
-                Sorry! We couldn't retrieve Steam data about this application.
-                It must not be available on the Steam store.
+                Oops, we couldn't retrieve Steam data about this application.
+                Sorry!
               </h5>
               <br />
             </Col>

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
-import twitch_logo from "../assets/twitch_logo.png"
+import Image from "react-bootstrap/Image";
+import twitch_logo from "../assets/twitch_logo.png";
 
 class TwitchDetails extends Component {
   constructor(props) {
@@ -46,27 +47,29 @@ class TwitchDetails extends Component {
       return (
         <React.Fragment>
           <Row className="justify-content-between">
-            <Col sm={2}></Col>
+            <Col sm={1}></Col>
+            <Col sm={1} className="text-center mb-4 px-0 mr-3"></Col>
             <Col sm={3} style={twitchStyle} className="text-center mb-4">
               <br />
-              <br />
+              <p></p>
               <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
               </Spinner>
               <br />
               <br />
-              <br />
+              <p></p>
             </Col>
             <Col sm={3} style={twitchStyle} className="text-center mb-4">
               <br />
-              <br />
+              <p></p>
               <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
               </Spinner>
               <br />
               <br />
-              <br />
+              <p></p>
             </Col>
+
             <Col sm={2}></Col>
           </Row>
         </React.Fragment>
@@ -96,12 +99,15 @@ class TwitchDetails extends Component {
       <React.Fragment>
         <Row className="justify-content-between">
           <Col sm={1}></Col>
-          <Col sm={1}> 
-          <a href={"https://twitch.tv/xqcow"}> 
-            <img src={twitch_logo} style={{...twitchStyle, width:"4rem"}}/>
-          </a>
+          <Col sm={1} className="text-center mb-4 px-0 mr-3">
+            <a href={"https://twitch.tv/xqcow"}>
+              <Image
+                src={twitch_logo}
+                style={{ ...twitchStyle, width: "4rem" }}
+              />
+            </a>
           </Col>
-          
+
           <Col sm={3} style={twitchStyle} className="text-center mb-4">
             <br />
             <h5>Streaming</h5>
