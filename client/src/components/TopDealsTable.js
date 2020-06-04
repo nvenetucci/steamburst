@@ -16,7 +16,7 @@ class TopDealsTable extends Component {
 
   render() {
     return (
-      <Table striped bordered variant="dark">
+      <Table striped bordered variant="dark" className={"table-responsive-sm"}>
         <thead>
         </thead>
         <tbody>

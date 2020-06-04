@@ -6,7 +6,7 @@ class DealDetailsTable extends Component {
     render() {
 
         return (
-        <Table striped bordered variant="dark">
+        <Table striped bordered variant="dark" className={"table-responsive-sm"}>
             <thead>
                 <tr>
                     <th>Store</th>

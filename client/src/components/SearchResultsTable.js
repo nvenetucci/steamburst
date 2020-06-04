@@ -6,7 +6,7 @@ import SearchResultsData from "./SearchResultsData";
 class SearchResultsTable extends Component {
   render() {
     return (
-      <Table striped bordered variant="dark">
+      <Table striped bordered variant="dark" className={"table-responsive-sm"}>
         <thead>
           <tr>
             <th style={{ width: "15%" }}></th>
