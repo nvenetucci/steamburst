@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DealDetailsTable from "./DealDetailsTable";
 
 class DealDetails extends Component {
     constructor(props) {
@@ -26,36 +27,16 @@ class DealDetails extends Component {
         
         if (!isLoaded) {
             return <div>Loading...</div>;
-        } else {
+        } 
 
-            return (
-            <div className="DealDetails">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Store</th>
-                            <th>Current Price</th>
-                            <th>Previous Price</th>
-                            <th>Savings</th>
+        const currentStores = deal_data.data[game_name].list
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {deal_data.data[game_name].list.map((app, index) => (
-                            <tr key={index}>
-                                <td>
-                                    <a href={app.url}>{app.shop.name}</a>
-                                </td>
-                                <td>{app.price_new}</td>
-                                <td>{app.price_old}</td>
-                                <td>{app.price_cut}% OFF</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        return (
+            <div className={"container mt-5"}>
+                <DealDetailsTable stores={currentStores} />
             </div>
-            );
-        }
+        );
+
     }
 }
 
