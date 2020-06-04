@@ -11,7 +11,7 @@ class SearchResults extends Component {
       isLoaded: false,
       results: [],
       currentPage: 1,
-      appsPerPage: 15,
+      appsPerPage: 10,
     };
   }
 

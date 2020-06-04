@@ -14,7 +14,7 @@ class SearchResultsData extends Component {
   }
 
   componentDidMount() {
-    fetch(`/steam/app/${this.props.appid}&filters=basic`)
+    fetch(`/steam/app/${this.props.appid}`)
       .then((res) => res.json())
       .then((data) => this.setState({ isLoaded: true, details: data }))
       .catch((err) => console.log("Request failed", err));
