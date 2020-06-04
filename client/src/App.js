@@ -31,14 +31,14 @@ class App extends Component {
   getNameById = (appid) => {
     const obj = this.state.apps.find((app) => `${app.appid}` === appid);
 
-    return obj.name;
+    if (obj === undefined) {
+      return undefined;
+    } else {
+      return obj.name;
+    }
   };
 
   getIdByName = (appname) => {
-    // const obj = this.state.apps.find((app) => `${app.name}` === appname);
-
-    // return obj.appid;
-
     const obj = this.state.apps.find((app) => `${app.name}` === appname);
 
     if (obj === undefined) {

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import CurrentPlayers from "../CurrentPlayers";
@@ -10,6 +11,10 @@ import NavBar from "../NavBar";
 class AppDetails extends Component {
   render() {
     const appname = this.props.getNameById(this.props.match.params.appid);
+
+    if (appname === undefined) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <React.Fragment>
