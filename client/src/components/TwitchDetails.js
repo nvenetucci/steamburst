@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
+import twitch_logo from "../assets/twitch_logo.png"
 
 class TwitchDetails extends Component {
   constructor(props) {
@@ -94,7 +95,13 @@ class TwitchDetails extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-between">
-          <Col sm={2}></Col>
+          <Col sm={1}></Col>
+          <Col sm={1}> 
+          <a href={"https://twitch.tv/xqcow"}> 
+            <img src={twitch_logo} style={{...twitchStyle, width:"4rem"}}/>
+          </a>
+          </Col>
+          
           <Col sm={3} style={twitchStyle} className="text-center mb-4">
             <br />
             <h5>Streaming</h5>
