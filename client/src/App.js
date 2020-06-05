@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import "./App.css";
+import Spinner from "react-bootstrap/Spinner";
 import Home from "./components/pages/Home";
 import AppDetails from "./components/pages/AppDetails";
 import SearchResults from "./components/pages/SearchResults";
@@ -50,7 +51,16 @@ class App extends Component {
 
   render() {
     if (!this.state.isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <Spinner
+          animation="border"
+          role="status"
+          variant="light"
+          className="ml-3 mt-3"
+        >
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      );
     } else {
       return (
         <Router>
