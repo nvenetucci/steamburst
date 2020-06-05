@@ -33,54 +33,80 @@ app.get("/steam/applist/update", (req, res) => {
     .catch((err) => console.log("Request failed", err));
 });
 
+// app.get("/steam/applist", (req, res) => {
+//   fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       if (data.applist.apps.length === 0) {
+//         console.log("sending applist from storage");
+//         res.json(appList);
+//       } else {
+//         console.log("sending applist from api");
+//         res.json(data);
+//       }
+//     })
+//     .catch((err) => console.log("Request failed", err));
+// });
+
 app.get("/steam/applist", (req, res) => {
-  fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.applist.apps.length === 0) {
-        console.log("sending applist from storage");
-        res.json(appList);
-      } else {
-        console.log("sending applist from api");
-        res.json(data);
-      }
-    })
-    .catch((err) => console.log("Request failed", err));
+  res.json(appList);
 });
 
+// app.get("/steam/search/:term", (req, res) => {
+//   fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       let apps = {};
+
+//       if (data.applist.apps.length === 0) {
+//         console.log("searching with storage data");
+//         apps = appList;
+//       } else {
+//         console.log("searching with api data");
+//         apps = data;
+//       }
+
+//       const options = {
+//         // isCaseSensitive: false,
+//         // includeScore: false,
+//         // shouldSort: true,
+//         // includeMatches: false,
+//         // findAllMatches: false,
+//         // minMatchCharLength: 1,
+//         // location: 0,
+//         threshold: 0.08,
+//         distance: 50,
+//         // useExtendedSearch: false,
+//         keys: ["name"],
+//       };
+
+//       const fuse = new Fuse(apps.applist.apps, options);
+
+//       res.json(fuse.search(req.params.term, { limit: 30 }));
+//     })
+//     .catch((err) => console.log("Request failed", err));
+// });
+
 app.get("/steam/search/:term", (req, res) => {
-  fetch("https://api.steampowered.com/ISteamApps/GetAppList/v2/")
-    .then((res) => res.json())
-    .then((data) => {
-      let apps = {};
+  const apps = appList;
 
-      if (data.applist.apps.length === 0) {
-        console.log("searching with storage data");
-        apps = appList;
-      } else {
-        console.log("searching with api data");
-        apps = data;
-      }
+  const options = {
+    // isCaseSensitive: false,
+    // includeScore: false,
+    // shouldSort: true,
+    // includeMatches: false,
+    // findAllMatches: false,
+    // minMatchCharLength: 1,
+    // location: 0,
+    threshold: 0.08,
+    distance: 50,
+    // useExtendedSearch: false,
+    keys: ["name"],
+  };
 
-      const options = {
-        // isCaseSensitive: false,
-        // includeScore: false,
-        // shouldSort: true,
-        // includeMatches: false,
-        // findAllMatches: false,
-        // minMatchCharLength: 1,
-        // location: 0,
-        threshold: 0.08,
-        distance: 50,
-        // useExtendedSearch: false,
-        keys: ["name"],
-      };
+  const fuse = new Fuse(apps.applist.apps, options);
 
-      const fuse = new Fuse(apps.applist.apps, options);
-
-      res.json(fuse.search(req.params.term, { limit: 30 }));
-    })
-    .catch((err) => console.log("Request failed", err));
+  res.json(fuse.search(req.params.term, { limit: 30 }));
 });
 
 app.get("/steam/top100", (req, res) => {
