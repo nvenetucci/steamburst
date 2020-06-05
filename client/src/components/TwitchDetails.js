@@ -135,7 +135,7 @@ class TwitchDetails extends Component {
 
         {streams.length !== 0 && (
           <Row className="justify-content-center">
-            <Col sm={10} style={twitchStyle} className="text-center mb-4">
+            <Col sm={11} style={twitchStyle} className="text-center mb-4">
               <ResponsiveEmbed aspectRatio="16by9">
                 <iframe
                   title="TwitchEmbedded"

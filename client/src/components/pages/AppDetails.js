@@ -5,7 +5,6 @@ import Table from "react-bootstrap/Table";
 import CurrentPlayers from "../CurrentPlayers";
 import SteamDetails from "../SteamDetails";
 import TwitchDetails from "../TwitchDetails";
-import DealDetails from "../DealDetails";
 import NavBar from "../NavBar";
 
 class AppDetails extends Component {
@@ -28,7 +27,7 @@ class AppDetails extends Component {
                 </th>
                 <th className="text-right text-white">
                   In-Game:{" "}
-                  <strong className="text-success">
+                  <strong style={{ color: "Lime" }}>
                     <CurrentPlayers appid={this.props.match.params.appid} />
                   </strong>
                 </th>
@@ -42,10 +41,6 @@ class AppDetails extends Component {
 
           <SteamDetails appid={this.props.match.params.appid} />
         </Container>
-
-        <div className="AppDetails">
-          <DealDetails appid={this.props.match.params.appid} />
-        </div>
       </React.Fragment>
     );
   }

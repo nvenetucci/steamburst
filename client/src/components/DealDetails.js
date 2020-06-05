@@ -32,9 +32,7 @@ class DealDetails extends Component {
         const currentStores = deal_data.data[game_name].list
 
         return (
-            <div className={"container mt-5"}>
                 <DealDetailsTable stores={currentStores} />
-            </div>
         );
 
     }

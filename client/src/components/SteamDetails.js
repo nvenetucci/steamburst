@@ -5,6 +5,7 @@ import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
 import Spinner from "react-bootstrap/Spinner";
+import DealDetails from "./DealDetails";
 
 class SteamDetails extends Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class SteamDetails extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-center">
-          <Col sm={5} className="text-center">
+          <Col sm={5} className="text-center mb-2">
             <Image
               src={details[appid].data.header_image}
               width="460"
@@ -113,6 +114,7 @@ class SteamDetails extends Component {
             </Table>
           </Col>
         </Row>
+        <DealDetails appid={appid} />
       </React.Fragment>
     );
   }
