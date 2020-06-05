@@ -37,17 +37,20 @@ class SearchBar extends Component {
     }
     return (
       <Form inline onSubmit={this.handleSubmit} className="ml-auto">
-        <FormControl
-          type="search"
-          placeholder="Search"
-          className="mr-sm-2"
-          name="term"
-          value={this.state.term}
-          onChange={this.handleChange}
-        />
-        <Button variant="outline-info" type="submit">
-          Search
-        </Button>
+        <div class="input-group">
+          <FormControl
+            type="search"
+            placeholder="Search"
+            name="term"
+            value={this.state.term}
+            onChange={this.handleChange}
+          />
+          <div class="input-group-append">
+            <Button variant="outline-info" type="submit">
+              Search
+            </Button>
+          </div>
+        </div>
       </Form>
     );
   }
