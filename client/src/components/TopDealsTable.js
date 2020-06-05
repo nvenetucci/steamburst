@@ -21,7 +21,7 @@ class TopDealsTable extends Component {
         </thead>
         <tbody>
           {this.props.apps.map((app, index) => (
-            <tr key={this.props.getIdByName(app.title)}>
+            <tr key={this.props.indexOfLastApp + index - 9}>
               <td className={"align-middle"} style={{ width: "2%" }}>{`${this.props.indexOfLastApp + index - 9}.`}</td>
 
               <td className={"align-middle table-borderless"} style={{ width: "8%" }}>
