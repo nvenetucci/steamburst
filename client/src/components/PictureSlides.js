@@ -5,19 +5,26 @@ class PictureSlides extends Component {
 
     render() {
 
-        
-
         return(
 
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" >
+            <div id="game_pics" class="carousel slide" data-ride="carousel" >
 
                 <ol class="carousel-indicators">
 
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                {this.props.pics.map((element, index) => {
+                        if(element.id === 0){
+                            return (
 
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                <li data-target="#game_pics" data-slide-to={`${element.id}`} class="active"></li>
 
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            )
+                        }
+                        return (
+
+                            <li data-target="#game_pics" data-slide-to={`${element.id}`}></li>
+
+                        )
+                    })}
 
                 </ol>
 
@@ -25,7 +32,7 @@ class PictureSlides extends Component {
 
                         
                     {this.props.pics.map((element, index) => {
-                        if(element.id == 0){
+                        if(element.id === 0){
                             return (
 
                                 <div class="carousel-item active">
@@ -38,7 +45,7 @@ class PictureSlides extends Component {
                         }
                         return (
 
-                            <div class="carousel-item ">
+                            <div class="carousel-item">
 
                                 <img class="d-block w-100" src={`${element.path_full}`} alt={`${index} slide`} />
 
@@ -50,7 +57,7 @@ class PictureSlides extends Component {
 
                 </div>
 
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#game_pics" role="button" data-slide="prev">
 
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 
@@ -58,7 +65,7 @@ class PictureSlides extends Component {
 
                 </a>
 
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#game_pics" role="button" data-slide="next">
 
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
 
