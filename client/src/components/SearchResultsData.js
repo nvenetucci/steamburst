@@ -61,7 +61,7 @@ class SearchResultsData extends Component {
               <Link style={{ color: "white" }} to={`/app/${appid}`}>
                 {this.props.name}
                 <Badge variant="info" className="ml-2">
-                  Info
+                  Burst
                 </Badge>
               </Link>
             </td>
