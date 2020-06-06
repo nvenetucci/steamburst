@@ -9,6 +9,7 @@ The API's we used are:
 * Steam Web API
   * used for gathering all information about Steam games in general
   * https://steamcommunity.com/dev
+  * https://partner.steamgames.com/doc/webapi_overview
 
 * Twitch API
   * used for getting player count, streamer count, link to twitch game page, and top stream itself being displayed
@@ -19,6 +20,6 @@ The API's we used are:
   * https://itad.docs.apiary.io/#
   
   
-This project was created using React and is being hosted on heroku 
+This project was created using an Express backend and React frontend. It's currently being hosted on Heroku.
 
 https://steamburst.herokuapp.com/
