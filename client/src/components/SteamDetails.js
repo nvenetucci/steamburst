@@ -88,31 +88,41 @@ class SteamDetails extends Component {
             />
             <Table striped bordered variant="dark" responsive>
               <tbody className="text-left">
-                <tr>
-                  <td style={{ width: "30%" }}>Name</td>
-                  <td>{details[appid].data.name}</td>
-                </tr>
-                <tr>
-                  <td>Developer</td>
-                  <td>{details[appid].data.developers[0]}</td>
-                </tr>
-                <tr>
-                  <td>Publisher</td>
-                  <td>{details[appid].data.publishers[0]}</td>
-                </tr>
-                <tr>
-                  <td>Release Date</td>
-                  <td>{details[appid].data.release_date.date}</td>
-                </tr>
-                <tr>
-                  <td colSpan="2">
-                    {details[appid].data.genres.map((genre, index) => (
-                      <Badge key={index} variant="secondary" className="mr-1">
-                        {genre.description}
-                      </Badge>
-                    ))}
-                  </td>
-                </tr>
+                {details[appid].data.name && (
+                  <tr>
+                    <td style={{ width: "30%" }}>Name</td>
+                    <td>{details[appid].data.name}</td>
+                  </tr>
+                )}
+                {details[appid].data.developers && (
+                  <tr>
+                    <td>Developer</td>
+                    <td>{details[appid].data.developers[0]}</td>
+                  </tr>
+                )}
+                {details[appid].data.publishers && (
+                  <tr>
+                    <td>Publisher</td>
+                    <td>{details[appid].data.publishers[0]}</td>
+                  </tr>
+                )}
+                {details[appid].data.release_date && (
+                  <tr>
+                    <td>Release Date</td>
+                    <td>{details[appid].data.release_date.date}</td>
+                  </tr>
+                )}
+                {details[appid].data.genres && (
+                  <tr>
+                    <td colSpan="2">
+                      {details[appid].data.genres.map((genre, index) => (
+                        <Badge key={index} variant="secondary" className="mr-1">
+                          {genre.description}
+                        </Badge>
+                      ))}
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <td colSpan="2">
                     <Button
@@ -127,7 +137,9 @@ class SteamDetails extends Component {
             </Table>
           </Col>
         </Row>
-        <PictureSlides pics={details[appid].data.screenshots} />
+        {details[appid].data.screenshots && (
+          <PictureSlides pics={details[appid].data.screenshots} />
+        )}
         <br></br>
         <SideDetails info={details[appid].data} />
         <br></br>
