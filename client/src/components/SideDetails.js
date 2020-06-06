@@ -18,23 +18,54 @@ class SideDetails extends Component {
 
             if(score === -1 || score == null || url === ""){
                 return (
-                    <p>No Metacritic Score Available</p>
+                    <p></p>
                 );
             } else {
                 return (
-                    <a className={"btn btn-info"} style={{
-                        "padding-top": "0.5rem",
-                        "padding-bottom": "0.5rem",
-                        "padding-left": "1rem",
-                        "padding-right": "1rem",
-                        "border-radius": "30%",
-                        }} href={url}>
-                        <h3>{score}</h3>
-                    </a>
+                    <p class='lead text-white  text-left' > Metacritic Score: 
+                    <br>
+                    </br>
+                        <a className={"btn btn-info"} style={{
+                            "padding-top": "0.5rem",
+                            "padding-bottom": "0.5rem",
+                            "padding-left": "1rem",
+                            "padding-right": "1rem",
+                            "border-radius": "30%",
+                            }} href={url}>
+                            <h3>{score}</h3>
+                        </a>
+                    </p>
                 );
             }
 
         }
+
+
+    readWebsite(info){
+        
+        var website = "";
+
+        if(info.website == null){
+
+            return website;
+
+        }
+        else {
+
+            return (
+                <a 
+
+                    className='lead text-info text-center' 
+
+                    href={`${info.website}`}> 
+
+                    {`${info.website}`} 
+
+                </a>
+
+            )
+        }
+    }
 
     render() {
 
@@ -51,7 +82,7 @@ class SideDetails extends Component {
 
                     <tr className='text-left'>
 
-                        <a className='lead text-info text-center' href={`${this.props.info.website}`}> {`${this.props.info.website}`} </a>
+                        {this.readWebsite(this.props.info)}
 
                     </tr>
 
@@ -59,19 +90,32 @@ class SideDetails extends Component {
 
                     <tr>
 
-                        <p class='lead text-white  text-left' > Metacritic Score: 
 
-                            <div>
+                        <div>
 
-                                {this.readMetaScore(this.props.info)}
+                            {this.readMetaScore(this.props.info)}
 
-                            </div>
+                        </div>
 
-                        </p>
 
                     </tr>
+
+                    <br></br>
+
+                    <tr>
+
+                        <Button variant="secondary" href={`https://store.steampowered.com/app/${this.props.info.steam_appid}/`} >
+
+                            Steam Page
+
+                        </Button>
+
+                    </tr>
+
                 </tbody>
+
             </Table>
+
         )
 
     }
