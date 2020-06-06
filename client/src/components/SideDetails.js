@@ -49,13 +49,18 @@ class SideDetails extends Component {
 
                     <br></br>
 
-                    <tr className='text-left'>
+                    {this.props.info.website &&
+                        <React.Fragment>
 
-                        <a className='lead text-info text-center' href={`${this.props.info.website}`}> {`${this.props.info.website}`} </a>
+                            <tr className='text-left'>
 
-                    </tr>
+                                <a className='lead text-info text-center' href={`${this.props.info.website}`}> {`${this.props.info.website}`} </a>
 
-                    <br></br>
+                            </tr>
+                    
+                            <br></br>
+                        </React.Fragment>
+                    }  
 
                     <tr>
 
