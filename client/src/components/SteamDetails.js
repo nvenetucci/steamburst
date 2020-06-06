@@ -6,6 +6,7 @@ import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
 import Spinner from "react-bootstrap/Spinner";
 import DealDetails from "./DealDetails";
+import PictureSlides from "./PictureSlides";
 
 class SteamDetails extends Component {
   constructor(props) {
@@ -114,6 +115,7 @@ class SteamDetails extends Component {
             </Table>
           </Col>
         </Row>
+        <PictureSlides pics={details[appid].data.screenshots} />
         <DealDetails appid={appid} />
       </React.Fragment>
     );
