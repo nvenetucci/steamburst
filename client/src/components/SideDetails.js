@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
 
 
 class SideDetails extends Component {
@@ -42,7 +41,7 @@ class SideDetails extends Component {
         
 
         return (
-            <Table borderless >
+            <Table borderless className="mb-0">
                 <tbody>
                     <tr>
                         <p class='lead text-white  text-left' >{this.props.info.short_description}</p>
@@ -69,17 +68,6 @@ class SideDetails extends Component {
                             </div>
 
                         </p>
-
-                    </tr>
-
-                    <br></br>
-
-                    <tr>
-
-                        <Button variant="secondary" href={`https://store.steampowered.com/app/${this.props.info.steam_appid}/`} >
-                            Steam Page
-
-                        </Button>
 
                     </tr>
                 </tbody>

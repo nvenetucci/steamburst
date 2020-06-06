@@ -5,6 +5,7 @@ import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import DealDetails from "./DealDetails";
 import PictureSlides from "./PictureSlides";
 import SideDetails from "./SideDetails";
@@ -110,6 +111,16 @@ class SteamDetails extends Component {
                         {genre.description}
                       </Badge>
                     ))}
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan="2">
+                    <Button
+                      variant="secondary"
+                      href={`https://store.steampowered.com/app/${appid}/`}
+                    >
+                      Steam Store
+                    </Button>
                   </td>
                 </tr>
               </tbody>
