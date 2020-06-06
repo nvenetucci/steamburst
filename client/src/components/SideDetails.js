@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 
 class SideDetails extends Component {
@@ -16,9 +17,9 @@ class SideDetails extends Component {
                 url = "";
             }
 
-            if(score == -1 || score == null || url == ""){
+            if(score === -1 || score == null || url === ""){
                 return (
-                    <p>No metacritic score available</p>
+                    <p>No Metacritic Score Available</p>
                 );
             } else {
                 return (
@@ -27,8 +28,9 @@ class SideDetails extends Component {
                         "padding-bottom": "0.5rem",
                         "padding-left": "1rem",
                         "padding-right": "1rem",
+                        "border-radius": "30%",
                         }} href={url}>
-                        <h5>{score}</h5>
+                        <h3>{score}</h3>
                     </a>
                 );
             }
@@ -43,30 +45,41 @@ class SideDetails extends Component {
             <Table borderless >
                 <tbody>
                     <tr>
-
-                        <p class='lead text-white  text-center' >{this.props.info.short_description}</p>
-                        
+                        <p class='lead text-white  text-left' >{this.props.info.short_description}</p>
                     </tr>
+
                     <br></br>
-                    <tr className='text-center'>
+
+                    <tr className='text-left'>
 
                         <a className='lead text-info text-center' href={`${this.props.info.website}`}> {`${this.props.info.website}`} </a>
 
                     </tr>
+
                     <br></br>
+
                     <tr>
 
-                        
-                        <p class='lead text-white  text-center' > Metacritic Score: 
+                        <p class='lead text-white  text-left' > Metacritic Score: 
 
-                        <div>
-                            {this.readMetaScore(this.props.info)}
+                            <div>
 
-                            
-                        </div>
-                        
+                                {this.readMetaScore(this.props.info)}
+
+                            </div>
+
                         </p>
 
+                    </tr>
+
+                    <br></br>
+
+                    <tr>
+
+                        <Button variant="secondary" href={`https://store.steampowered.com/app/${this.props.info.steam_appid}/`} >
+                            Steam Page
+
+                        </Button>
 
                     </tr>
                 </tbody>
