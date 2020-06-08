@@ -23,7 +23,7 @@ class TopDealsTable extends Component {
   getAppID(name, shop_url){
     const temp = this.props.getIdByName(name);
     if (temp === undefined) {
-      if(shop_url.includes("steampowered")){
+      if(shop_url.includes("steampowered.com/app")){
         const url_list = shop_url.split("/");
         return url_list[url_list.length-2];
       }
