@@ -4,10 +4,8 @@ import Table from "react-bootstrap/Table";
 import SearchResultsData from "./SearchResultsData";
 
 class TopDealsTable extends Component {
-  checkIfOnSteam(name, shop_url, to_display) {
-    var temp;
-    temp = this.props.getIdByName(name);
-    if (temp === undefined) {
+  checkIfOnSteam(appid, shop_url, to_display) {
+    if (appid === undefined) {
       return (
         <a style={{ color: "white" }} href={shop_url}>
           {to_display}
@@ -15,10 +13,23 @@ class TopDealsTable extends Component {
       );
     } else {
       return (
-        <Link style={{ color: "white" }} to={`/app/${temp}`}>
+        <Link style={{ color: "white" }} to={`/app/${appid}`}>
           {to_display}
         </Link>
       );
+    }
+  }
+
+  getAppID(name, shop_url){
+    const temp = this.props.getIdByName(name);
+    if (temp === undefined) {
+      if(shop_url.includes("steampowered")){
+        const url_list = shop_url.split("/");
+        return url_list[url_list.length-2];
+      }
+      return undefined;
+    } else {
+      return temp;
     }
   }
 
@@ -38,16 +49,16 @@ class TopDealsTable extends Component {
                 style={{ width: "8%" }}
               >
                 {this.checkIfOnSteam(
-                  app.title,
+                  this.getAppID(app.title,app.urls.buy),
                   app.urls.buy,
                   <SearchResultsData
-                    appid={this.props.getIdByName(app.title)}
+                    appid={this.getAppID(app.title, app.urls.buy)}
                   />
                 )}
               </td>
 
               <td className={"align-middle"} style={{ width: "15%" }}>
-                {this.checkIfOnSteam(app.title, app.urls.buy, app.title)}
+                {this.checkIfOnSteam(this.getAppID(app.title,app.urls.buy), app.urls.buy, app.title)}
               </td>
               <td
                 className={"align-middle font-weight-bold font-italic"}
