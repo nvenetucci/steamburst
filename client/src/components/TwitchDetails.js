@@ -139,7 +139,7 @@ class TwitchDetails extends Component {
               <ResponsiveEmbed aspectRatio="16by9">
                 <iframe
                   title="TwitchEmbedded"
-                  src={`https://player.twitch.tv/?channel=${streams[0].user_name}&parent=streamernews.example.com&muted=true&autoplay=false`}
+                  src={`https://player.twitch.tv/?channel=${streams[0].user_name}&parent=steamburst.herokuapp.com&muted=true&autoplay=false`}
                   height="720"
                   width="1280"
                   frameBorder="0"
