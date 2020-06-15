@@ -7,15 +7,15 @@ class PictureSlides extends Component {
 
         return(
 
-            <div id="game_pics" class="carousel slide" data-ride="carousel" >
+            <div id="game_pics" className="carousel slide" data-ride="carousel" >
 
-                <ol class="carousel-indicators">
+                <ol className="carousel-indicators">
 
                 {this.props.pics.map((element, index) => {
                         if(element.id === 0){
                             return (
 
-                                <li data-target="#game_pics" data-slide-to={`${element.id}`} class="active"></li>
+                                <li data-target="#game_pics" data-slide-to={`${element.id}`} className="active"></li>
 
                             )
                         }
@@ -28,16 +28,16 @@ class PictureSlides extends Component {
 
                 </ol>
 
-                <div class="carousel-inner">
+                <div className="carousel-inner">
 
                         
                     {this.props.pics.map((element, index) => {
                         if(element.id === 0){
                             return (
 
-                                <div class="carousel-item active">
+                                <div className="carousel-item active">
 
-                                    <img class="d-block w-100" src={`${element.path_full}`} alt="First slide" />
+                                    <img className="d-block w-100" src={`${element.path_full}`} alt="First slide" />
 
                                 </div>
 
@@ -45,9 +45,9 @@ class PictureSlides extends Component {
                         }
                         return (
 
-                            <div class="carousel-item">
+                            <div className="carousel-item">
 
-                                <img class="d-block w-100" src={`${element.path_full}`} alt={`${index} slide`} />
+                                <img className="d-block w-100" src={`${element.path_full}`} alt={`${index} slide`} />
 
                             </div>
 
@@ -57,19 +57,19 @@ class PictureSlides extends Component {
 
                 </div>
 
-                <a class="carousel-control-prev" href="#game_pics" role="button" data-slide="prev">
+                <a className="carousel-control-prev" href="#game_pics" role="button" data-slide="prev">
 
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
 
-                    <span class="sr-only">Previous</span>
+                    <span className="sr-only">Previous</span>
 
                 </a>
 
-                <a class="carousel-control-next" href="#game_pics" role="button" data-slide="next">
+                <a className="carousel-control-next" href="#game_pics" role="button" data-slide="next">
 
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
 
-                    <span class="sr-only">Next</span>
+                    <span className="sr-only">Next</span>
 
                 </a>
 

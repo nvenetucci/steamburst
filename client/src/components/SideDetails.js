@@ -44,7 +44,7 @@ class SideDetails extends Component {
             <Table borderless className="mb-0">
                 <tbody>
                     <tr>
-                        <p class='lead text-white  text-left' >{this.props.info.short_description}</p>
+                        <p className='lead text-white  text-left' >{this.props.info.short_description}</p>
                     </tr>
 
                     <br></br>
@@ -64,7 +64,7 @@ class SideDetails extends Component {
 
                     <tr>
 
-                        <p class='lead text-white  text-left' > Metacritic Score: 
+                        <p className='lead text-white  text-left' > Metacritic Score: 
 
                             <div>
 
