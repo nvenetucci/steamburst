@@ -23,11 +23,11 @@ class SideDetails extends Component {
             } else {
                 return (
                     <a className={"btn btn-info"} style={{
-                        "padding-top": "0.5rem",
-                        "padding-bottom": "0.5rem",
-                        "padding-left": "1rem",
-                        "padding-right": "1rem",
-                        "border-radius": "30%",
+                        "paddingTop": "0.5rem",
+                        "paddingBottom": "0.5rem",
+                        "paddingLeft": "1rem",
+                        "paddingRight": "1rem",
+                        "borderRadius": "30%",
                         }} href={url}>
                         <h3>{score}</h3>
                     </a>
