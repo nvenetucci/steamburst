@@ -1,25 +1,27 @@
 # steamburst
-Course Project for CS465P, Full-Stack Web Development
+Course Project for Full-Stack Web Development (CS465P)
 Created by Nicholai Venetucci and Andrew Bespaly
 
-This Web Development project is an informational site for all things related to Steam games.
+This web application is an informational site for trending data related to Steam games.
 
-The API's we used are:
+The APIs we used:
 
 * Steam Web API
-  * used for gathering all information about Steam games in general
+  * Used for gathering general information about Steam games (current player count, release date, etc.)
   * https://steamcommunity.com/dev
   * https://partner.steamgames.com/doc/webapi_overview
 
 * Twitch API
-  * used for getting player count, streamer count, link to twitch game page, and top stream itself being displayed
+  * Used for gathering Twitch information about Steam games (current streamer count, viewer count, most-viewed streamer, etc.)
   * https://dev.twitch.tv/docs/api/
   
 * IsThereAnyDeal API
-  * used for getting best deals for a Steam game from other sites not related to Steam, and specific shop details for each game
+  * Used for gathering best-price information on Steam games. Provides price details from sites other than Steam.
   * https://itad.docs.apiary.io/#
   
   
 This project was created using an Express backend and React frontend. It's currently being hosted on Heroku.
+
+Note: some features may decline to load due to expired API keys.
 
 https://steamburst.herokuapp.com/
